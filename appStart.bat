@@ -1,2 +1,3 @@
-supervisor app.js
-start "" http://localhost:8080/btcd
+start /min supervisor app.js
+start "" public/index.html
+exit

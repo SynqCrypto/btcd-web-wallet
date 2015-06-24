@@ -1,0 +1,102 @@
+body {
+  /*padding-top: 70px;*/
+  padding-bottom: 30px;
+}
+
+.theme-dropdown .dropdown-menu {
+  position: static;
+  display: block;
+  margin-bottom: 20px;
+}
+
+.theme-showcase > p > .btn {
+  margin: 5px 0;
+}
+
+.theme-showcase .navbar .container {
+  width: auto;
+}
+
+.top-content {
+  width: 100%;
+  background-color: #3A97D4;
+  position: fixed;
+}
+
+.top-content .container { 
+  width:100%;
+}
+.wallet-stats {
+  height: 63px;
+}
+.wallet-stats .text {
+  font-size: 20px;
+  font-weight: 600;
+  color: white;
+}
+ 
+.wallet-stats .left {
+  text-align: right;
+}
+
+.wallet-stats .center{
+  text-align: center;
+}
+
+.wallet-stats .right{
+  text-align: left;
+}
+
+.button-settings{
+  float: left;
+  font-size:35px;
+  color: white;
+  padding: 17px 0px 0px 5px;
+}
+
+.button-refresh{
+  float: right;
+  font-size:35px;
+  color: white;
+  padding: 17px 5px 0px 0px;
+}
+
+.wallet-nav {
+  background-color: #364357;
+}
+
+.wallet-nav div.wallet-nav-button-content {
+  height:100px;
+}
+
+.wallet-nav div.wallet-nav-button-content:hover{
+  background-color: #EB7260;
+}
+
+.wallet-nav.container{
+  padding: 0px;
+  
+}
+
+.wallet-nav .glyph{
+  color: white;
+  padding-top: 20px;
+  text-align: center;
+  font-size: 30px;
+}
+
+.wallet-nav .text{
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  padding-top: 0px;
+  text-align: center;
+}
+
+.wallet-nav-button {
+
+}
+
+#main {
+  padding-top: 250px;
+}

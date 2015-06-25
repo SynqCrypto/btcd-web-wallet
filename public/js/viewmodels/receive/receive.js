@@ -1,4 +1,4 @@
-require(['ko'], function(ko){
+define(['knockout'], function(ko){
     var receiveType = function(options){
     } 
 

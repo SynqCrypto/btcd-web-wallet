@@ -1,6 +1,7 @@
 body {
   /*padding-top: 70px;*/
   padding-bottom: 30px;
+  background-color: #EADFD5;
 }
 
 .theme-dropdown .dropdown-menu {
@@ -71,6 +72,11 @@ body {
 
 .wallet-nav div.wallet-nav-button-content:hover{
   background-color: #EB7260;
+}
+
+.wallet-nav div.wallet-nav-button-content.selected{
+  background-color: #EB7260;
+  border-bottom: 7px solid white;
 }
 
 .wallet-nav.container{

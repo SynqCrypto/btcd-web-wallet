@@ -1,17 +1,9 @@
 require.config({
     paths: {
-        ko: "knockout-3.3.0.debug",
-        amplify: "amplify"
-    },
-    shim: {
-        ko: {
-            exports: "ko"
-        },
-        amplify: {
-            exports: "amplify"
-        }
-    },
-    baseUrl: "js"
+        knockout: "knockout-3.3.0.debug",
+        'knockout-amd-helpers': 'knockout-amd-helpers',
+        text: "text"
+    }
 });
  
 require( [ "app" ], function( App ) {

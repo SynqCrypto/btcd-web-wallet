@@ -33,52 +33,55 @@
 
   <body role="document">
     <div id='wallet-container'>
-    <div class='top-content'>
-        <div class='container'>
-            <div class="button-settings"><span class="glyphicon glyphicon-cog"></span></div>
-            <div class="button-refresh"><span class="glyphicon glyphicon-refresh"></span></div>
-        </div>
-        <div class='wallet-stats container'>
+        <div class='top-content'>
+            <div class='container'>
+                <div class="button-settings"><span class="glyphicon glyphicon-cog"></span></div>
+                <div class="button-refresh"><span class="glyphicon glyphicon-refresh"></span></div>
+            </div>
+            <div class='wallet-stats container'>
 
-            <div class="row">
+                <div class="row">
 
-                <div class="col-sm-4 left text">Total: <span data-bind='text: BtcdTotal'></span> BTCD</div>
-                <div class="col-sm-4 center text">Available: <span data-bind='text: BtcdAvailable'></span> BTCD</div>
-                <div class="col-sm-4 right text">Stake: <span data-bind='text: BtcdStaking'></span> BTCD</div>
+                    <div class="col-sm-4 left text">Total: <span data-bind='text: BtcdTotal'></span> BTCD</div>
+                    <div class="col-sm-4 center text">Available: <span data-bind='text: BtcdAvailable'></span> BTCD</div>
+                    <div class="col-sm-4 right text">Stake: <span data-bind='text: BtcdStaking'></span> BTCD</div>
+                </div>
+            </div>
+            <div class='wallet-nav container'>
+                <div class='row'>
+                    <a href="#send" class="wallet-nav-button-link"><div data-bind="css: { selected: $data.CurrentView() === 'send' } "  class="wallet-nav-button-content col-sm-3">
+                        <div class="glyph"> <span class="glyphicon glyphicon-send" aria-hidden="true"></span> </div>
+                        <div class="text">Send</div>
+                    </div></a>
+                    <a href="#receive" class="wallet-nav-button-link"><div data-bind="css: { selected: $data.CurrentView() === 'receive' } " class="wallet-nav-button-content col-sm-3">
+                        <div class="glyph"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span></div>
+                        <div class="text">Receive</div>
+                    </div></a>
+                    <a href="#history" class="wallet-nav-button-link"><div data-bind="css: { selected: $data.CurrentView() === 'history' } " class="wallet-nav-button-content col-sm-3">
+                        <div class="glyph"><span class="glyphicon glyphicon-time" aria-hidden="true"></span></div>
+                        <div class="text">History</div>
+                    </div></a>
+
+                    <a href="#console" class="wallet-nav-button-link"><div class="wallet-nav-button-content col-sm-3" data-bind="css: { selected: $data.CurrentView() === 'console' } " >
+                        <div class="glyph"><span class="glyphicon glyphicon-console" aria-hidden="true"></span></div>
+                        <div class="text">Console</div>
+                    </div></a>
+                </div>
             </div>
         </div>
-        <div class='wallet-nav container'>
-            <div class='row'>
-                <a href="#send" class="wallet-nav-button-link"><div class="wallet-nav-button-content col-sm-3">
-                    <div class="glyph"> <span class="glyphicon glyphicon-send" aria-hidden="true"></span> </div>
-                    <div class="text">Send</div>
-                </div></a>
-                <a href="#receive" class="wallet-nav-button-link"><div class="wallet-nav-button-content col-sm-3">
-                    <div class="glyph"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span></div>
-                    <div class="text">Receive</div>
-                </div></a>
-                <a href="#history" class="wallet-nav-button-link"><div class="wallet-nav-button-content col-sm-3">
-                    <div class="glyph"><span class="glyphicon glyphicon-time" aria-hidden="true"></span></div>
-                    <div class="text">History</div>
-                </div></a>
-
-                <a href="#console" class="wallet-nav-button-link"><div class="wallet-nav-button-content col-sm-3">
-                    <div class="glyph"><span class="glyphicon glyphicon-console" aria-hidden="true"></span></div>
-                    <div class="text">Console</div>
-                </div></a>
-            </div>
-        </div>
-    </div>
     
-    <div id="main" class="container" role="main">
-	<!--ko template: CurrentView --> <!--/ko -->
-    </div> <!-- /container -->
+        <div id="main" class="container" role="main">
+            <!--ko template: CurrentView --> <!--/ko -->
+        </div> <!-- /container -->
     </div> <!-- #walletcontainer -->
 
 
-    <script type="text/html" id="Send">
+<!--    <script type="text/html" id="Send">
         <div>
             <h2>Send</h2>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque fermentum et neque pretium posuere. Duis in dictum risus. Etiam quis turpis mi. Curabitur eget malesuada sem. Duis at finibus turpis, ut dignissim lacus. Donec faucibus libero est. Fusce condimentum justo vel purus tincidunt ullamcorper. Donec in velit id sapien imperdiet lacinia non non lectus. Nullam at venenatis metus. Duis ex turpis, tincidunt at orci vitae, gravida auctor eros. Duis tempor finibus purus eget vulputate. Donec eleifend pharetra sapien vel pharetra. Aliquam eu nisi sit amet ligula lobortis imperdiet. Quisque sodales tellus neque, eget rutrum magna eleifend eget. Duis quis dui lacinia, auctor massa a, aliquam purus.
+
+Aenean neque sem, commodo quis rhoncus vel, rhoncus eu lacus. Vestibulum imperdiet hendrerit pretium. Nunc vitae elit ut quam elementum pellentesque et vitae mauris. Nulla urna elit, eleifend vitae orci a, laoreet consectetur ligula. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed interdum, nibh ac commodo aliquam, est augue faucibus justo, eget blandit dui felis id odio. Sed eget risus et mi pharetra varius sed in purus. Pellentesque dapibus volutpat nunc ac scelerisque. Fusce eu gravida orci.  
         </div>
     </script>
     <script type="text/html" id="Receive">
@@ -96,17 +99,17 @@
             <h2>Console</h2>
         </div>
     </script>
-
+-->
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="js/jquery-min.js"></script>
+    <script src="js/jquery-1.9.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/docs.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="js/ie10-viewport-bug-workaround.js"></script>
     <script src="js/sammy.js" type="text/javascript"></script>
-    <script data-main="js/main" src="js/require.js"></script>
+    <script data-main="js/main" src="js/require.debug.js"></script>
   </body>
 </html>

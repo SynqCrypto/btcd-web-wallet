@@ -1,8 +1,12 @@
-define( [ "ko", "viewmodels/btcd-wallet" ], function( ko, Wallet) {
+define( [ "knockout",  "viewmodels/btcd-wallet", "knockout-amd-helpers", "text" ], function( ko, Wallet) {
     var App = function(){
 
     };
-     
+    ko.amdTemplateEngine.defaultPath = "../views";
+    ko.amdTemplateEngine.defaultSuffix = ".html";
+    ko.amdTemplateEngine.defaultRequireTextPluginName = "text";
+    ko.bindingHandlers.module.baseDir = "viewmodels"; 
+
     App.prototype.init = function() {
         console.log(Wallet);
         var wallet = new Wallet({btcdAvailable: 750.00, btcdTotal: 1000.00, btcdStaking: 250.00}); 
@@ -11,19 +15,19 @@ define( [ "ko", "viewmodels/btcd-wallet" ], function( ko, Wallet) {
 
         Sammy(function() {
             this.get('#send', function() {
-                wallet.CurrentView('Send');                 
+                wallet.CurrentView('send');                 
             });
  
             this.get('#receive', function() {
-                wallet.CurrentView('Receive');                 
+                wallet.CurrentView('receive');                 
             });
         
             this.get('#history', function() {
-                wallet.CurrentView('History');                 
+                wallet.CurrentView('history');                 
             });
 
             this.get('#console', function() {
-                wallet.CurrentView('Console');                 
+                wallet.CurrentView('console');                 
             });
 
         }).run('#console');

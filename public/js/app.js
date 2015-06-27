@@ -1,4 +1,4 @@
-define( [ "knockout",  "viewmodels/btcd-wallet", "knockout-amd-helpers", "text" ], function( ko, Wallet) {
+define( [ "knockout",  "viewmodels/btcd-wallet", "knockout-amd-helpers", "text", "bindinghandlers/modal" ], function( ko, Wallet) {
     var App = function(){
 
     };

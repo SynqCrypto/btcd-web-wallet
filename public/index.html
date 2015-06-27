@@ -35,7 +35,7 @@
     <div id='wallet-container'>
         <div class='top-content'>
             <div class='container'>
-                <div class="button-settings"><span class="glyphicon glyphicon-cog"></span></div>
+                <div class="button-settings"><span data-bind="click: encrypt" class="glyphicon glyphicon-cog"></span></div>
                 <div class="button-refresh"><span class="glyphicon glyphicon-refresh"></span></div>
             </div>
             <div class='wallet-stats container'>
@@ -73,34 +73,28 @@
         <div id="main" class="container" role="main">
             <!--ko template: CurrentView --> <!--/ko -->
         </div> <!-- /container -->
+
+    <div data-bind="modal:ShowDialog"  id="defaultModal" class="modal fade" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                    <h4 id="modal-label">Dynamic Modal</h4>
+                </div>
+
+                <div class="modal-body">
+                    <!--ko template: 'encrypt' --><!-- /ko -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-xs" >One</button>
+                    <button type="button" class="btn btn-primary btn-xs" >Two</button>
+                </div>
+            </div> 
+        </div> 
+    </div> 
+
     </div> <!-- #walletcontainer -->
-
-
-<!--    <script type="text/html" id="Send">
-        <div>
-            <h2>Send</h2>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque fermentum et neque pretium posuere. Duis in dictum risus. Etiam quis turpis mi. Curabitur eget malesuada sem. Duis at finibus turpis, ut dignissim lacus. Donec faucibus libero est. Fusce condimentum justo vel purus tincidunt ullamcorper. Donec in velit id sapien imperdiet lacinia non non lectus. Nullam at venenatis metus. Duis ex turpis, tincidunt at orci vitae, gravida auctor eros. Duis tempor finibus purus eget vulputate. Donec eleifend pharetra sapien vel pharetra. Aliquam eu nisi sit amet ligula lobortis imperdiet. Quisque sodales tellus neque, eget rutrum magna eleifend eget. Duis quis dui lacinia, auctor massa a, aliquam purus.
-
-Aenean neque sem, commodo quis rhoncus vel, rhoncus eu lacus. Vestibulum imperdiet hendrerit pretium. Nunc vitae elit ut quam elementum pellentesque et vitae mauris. Nulla urna elit, eleifend vitae orci a, laoreet consectetur ligula. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed interdum, nibh ac commodo aliquam, est augue faucibus justo, eget blandit dui felis id odio. Sed eget risus et mi pharetra varius sed in purus. Pellentesque dapibus volutpat nunc ac scelerisque. Fusce eu gravida orci.  
-        </div>
-    </script>
-    <script type="text/html" id="Receive">
-        <div>
-            <h2>Receive</h2>    
-        </div>
-    </script>
-    <script type="text/html" id="History">
-        <div>
-            <h2>History</h2>
-        </div>
-    </script>
-    <script type="text/html" id="Console">
-        <div>
-            <h2>Console</h2>
-        </div>
-    </script>
--->
-
+<!-- Modal -->
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->

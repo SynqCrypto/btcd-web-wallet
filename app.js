@@ -114,6 +114,16 @@ app.get('/listaddressgroupings', function(req, res){
 	});
 });
 
+app.get('/listreceivedbyaddress', function(req, res){
+	btcd.listreceivedbyaddress(function(err, result){
+		console.log("err:"+err+" result:"+result);
+		if(err)
+			res.send(err);
+		else
+			res.send(JSON.stringify(result));
+	});
+});
+
 app.get('/listtransactions', function(req, res){
 	btcd.listtransactions(function(err, result){
 		console.log("err:"+err+" result:"+result);

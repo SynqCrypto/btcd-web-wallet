@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Theme Template for Bootstrap</title>
+    <title>BitcoinDark Wallet</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -36,33 +36,33 @@
         <div class='top-content'>
             <div class='container'>
                 <div class="button-settings"><span data-bind="click: encrypt" class="glyphicon glyphicon-cog"></span></div>
-                <div class="button-refresh"><span class="glyphicon glyphicon-refresh"></span></div>
+                <div class="button-refresh"><span data-bind="click: refresh" class="glyphicon glyphicon-refresh"></span></div>
             </div>
             <div class='wallet-stats container'>
 
                 <div class="row">
 
-                    <div class="col-sm-4 left text">Total: <span data-bind='text: BtcdTotal'></span> BTCD</div>
-                    <div class="col-sm-4 center text">Available: <span data-bind='text: BtcdAvailable'></span> BTCD</div>
-                    <div class="col-sm-4 right text">Stake: <span data-bind='text: BtcdStaking'></span> BTCD</div>
+                    <div class="col-sm-4 left text">Total: <span data-bind='text: btcdTotal'></span> BTCD</div>
+                    <div class="col-sm-4 center text">Available: <span data-bind='text: btcdAvailable'></span> BTCD</div>
+                    <div class="col-sm-4 right text">Stake: <span data-bind='text: btcdStaking'></span> BTCD</div>
                 </div>
             </div>
             <div class='wallet-nav container'>
                 <div class='row'>
-                    <a href="#send" class="wallet-nav-button-link"><div data-bind="css: { selected: $data.CurrentView() === 'send' } "  class="wallet-nav-button-content col-sm-3">
+                    <a href="#send" class="wallet-nav-button-link"><div data-bind="css: { selected: $data.currentView() === 'send' } "  class="wallet-nav-button-content col-sm-3">
                         <div class="glyph"> <span class="glyphicon glyphicon-send" aria-hidden="true"></span> </div>
                         <div class="text">Send</div>
                     </div></a>
-                    <a href="#receive" class="wallet-nav-button-link"><div data-bind="css: { selected: $data.CurrentView() === 'receive' } " class="wallet-nav-button-content col-sm-3">
+                    <a href="#receive" class="wallet-nav-button-link"><div data-bind="css: { selected: $data.currentView() === 'receive' } " class="wallet-nav-button-content col-sm-3">
                         <div class="glyph"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span></div>
                         <div class="text">Receive</div>
                     </div></a>
-                    <a href="#history" class="wallet-nav-button-link"><div data-bind="css: { selected: $data.CurrentView() === 'history' } " class="wallet-nav-button-content col-sm-3">
+                    <a href="#history" class="wallet-nav-button-link"><div data-bind="css: { selected: $data.currentView() === 'history' } " class="wallet-nav-button-content col-sm-3">
                         <div class="glyph"><span class="glyphicon glyphicon-time" aria-hidden="true"></span></div>
                         <div class="text">History</div>
                     </div></a>
 
-                    <a href="#console" class="wallet-nav-button-link"><div class="wallet-nav-button-content col-sm-3" data-bind="css: { selected: $data.CurrentView() === 'console' } " >
+                    <a href="#console" class="wallet-nav-button-link"><div class="wallet-nav-button-content col-sm-3" data-bind="css: { selected: $data.currentView() === 'console' } " >
                         <div class="glyph"><span class="glyphicon glyphicon-console" aria-hidden="true"></span></div>
                         <div class="text">Console</div>
                     </div></a>
@@ -71,10 +71,10 @@
         </div>
     
         <div id="main" class="container" role="main">
-            <!--ko template: CurrentView --> <!--/ko -->
+            <!--ko template: currentView --> <!--/ko -->
         </div> <!-- /container -->
 
-    <div data-bind="modal:ShowDialog"  id="defaultModal" class="modal fade" data-backdrop="static">
+    <div data-bind="modal:showDialog"  id="defaultModal" class="modal fade" data-backdrop="static">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

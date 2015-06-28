@@ -1,8 +1,8 @@
 define(['knockout'], function(ko){
     var consoleType = function(options){
-        this.IsLoading = ko.observable(false);
-        this.CommandText = ko.observable('help');
-        this.CommandOutput = ko.observable('Nothing');
+        this.isLoading = ko.observable(false);
+        this.commandText = ko.observable('help');
+        this.commandOutput = ko.observable('');
     };
 
     function parseCommand(commandText){
@@ -11,19 +11,18 @@ define(['knockout'], function(ko){
         return url;
     }
 
-    consoleType.prototype.RunCommand = function(){
+    consoleType.prototype.runCommand = function(){
         var self = this;
-        console.log('IsLoading: ' + self.IsLoading());
-        self.IsLoading(true);
+        self.isLoading(true);
         $.ajax({
             async: true,
             method: 'GET',
-            url: parseCommand(self.CommandText()),
+            url: parseCommand(self.commandText()),
             dataType: 'json'
         }).done(function(data){
-            self.IsLoading(false);
+            self.isLoading(false);
             console.log(data);
-            self.CommandOutput(data);                
+            self.commandOutput(data);                
         });
     };
     return consoleType; 

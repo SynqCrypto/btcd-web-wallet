@@ -15,19 +15,19 @@ define( [ "knockout",  "viewmodels/btcd-wallet", "knockout-amd-helpers", "text",
 
         Sammy(function() {
             this.get('#send', function() {
-                wallet.CurrentView('send');                 
+                wallet.currentView('send');                 
             });
  
             this.get('#receive', function() {
-                wallet.CurrentView('receive');                 
+                wallet.currentView('receive');                 
             });
         
             this.get('#history', function() {
-                wallet.CurrentView('history');                 
+                wallet.currentView('history');                 
             });
 
             this.get('#console', function() {
-                wallet.CurrentView('console');                 
+                wallet.currentView('console');                 
             });
 
         }).run('#console');

@@ -1,15 +1,15 @@
-<div class="container" data-bind="with: Console">
+<div class="container" data-bind="with: console">
     <h2>Console</h2>
     <div class="row">
         <div class="col-lg-12">
             <div class="input-group">
-                <input type="text" class="form-control input-lg" placeholder="Console Command" data-bind="textInput: CommandText">
+                <input type="text" class="form-control input-lg" placeholder="Console Command" data-bind="textInput: commandText">
                 <span class="input-group-btn">
-                    <button class="btn btn-primary btn-lg" type="button" data-bind="click: RunCommand">Run</button>
+                    <button class="btn btn-primary btn-lg" type="button" data-bind="click: runCommand">Run</button>
                 </span>
             </div><!-- /input-group -->
         </div><!-- /.col-lg-6 -->
     </div><!-- /.row -->
-    <!-- ko if: IsLoading --><p>Loading...</p><!--/ko -->
-    <pre class="pre-scrollable" data-bind="text: CommandOutput" />
+    <!-- ko if: isLoading --><p>Loading...</p><!--/ko -->
+    <pre class="pre-scrollable" data-bind="text: commandOutput" />
 </div>

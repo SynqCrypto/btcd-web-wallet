@@ -7,7 +7,7 @@ define(['knockout'],function(ko){
 
     function parseCommand(commandText, args){
         var url = 'http://127.0.0.1:8080/';
-        url = url.concat(commandText);
+        url = url.concat(commandText.concat('/'));
         if(args && args.length > 0){
             url = url.concat(args.join('/'));
         }
@@ -19,7 +19,7 @@ define(['knockout'],function(ko){
         return $.ajax({
             async: true,
             method: 'GET',
-            url: parseCommand(self.commandName()),
+            url: parseCommand(self.commandName(), self.args()),
             dataType: 'json'
         }).done(function(data){
             console.log(data);

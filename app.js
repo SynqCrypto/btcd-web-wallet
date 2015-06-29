@@ -114,8 +114,8 @@ app.get('/listaddressgroupings', function(req, res){
 	});
 });
 
-app.get('/listreceivedbyaddress', function(req, res){
-	btcd.listreceivedbyaddress(function(err, result){
+app.get('/listreceivedbyaddress/:minconf/:includeempty', function(req, res){
+	btcd.listreceivedbyaddress(req.params.minconf,req.params.includeempty, function(err, result){
 		console.log("err:"+err+" result:"+result);
 		if(err)
 			res.send(err);

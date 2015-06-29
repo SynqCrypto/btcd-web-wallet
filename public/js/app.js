@@ -8,8 +8,7 @@ define( [ "knockout",  "viewmodels/btcd-wallet", "knockout-amd-helpers", "text",
     ko.bindingHandlers.module.baseDir = "viewmodels"; 
 
     App.prototype.init = function() {
-        console.log(Wallet);
-        var wallet = new Wallet({btcdAvailable: 750.00, btcdTotal: 1000.00, btcdStaking: 250.00}); 
+        var wallet = new Wallet(); 
         ko.applyBindings(wallet, $('#wallet-container')[0]);
 
 
@@ -30,7 +29,7 @@ define( [ "knockout",  "viewmodels/btcd-wallet", "knockout-amd-helpers", "text",
                 wallet.currentView('console');                 
             });
 
-        }).run('#console');
+        }).run('#send');
     };
     return new App();
 });

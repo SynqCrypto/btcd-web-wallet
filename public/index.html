@@ -40,11 +40,10 @@
             </div>
             <div class='wallet-stats container'>
 
-                <div class="row">
-
-                    <div class="col-sm-4 left text">Total: <span data-bind='text: btcdTotal'></span> BTCD</div>
-                    <div class="col-sm-4 center text">Available: <span data-bind='text: btcdAvailable'></span> BTCD</div>
-                    <div class="col-sm-4 right text">Stake: <span data-bind='text: btcdStaking'></span> BTCD</div>
+                <div class="row" data-bind="with: walletStatus">
+                    <div class="col-sm-4 left text">Total: <span data-bind='text: total'></span> BTCD</div>
+                    <div class="col-sm-4 center text">Available: <span data-bind='text: available'></span> BTCD</div>
+                    <div class="col-sm-4 right text">Stake: <span data-bind='text: stake'></span> BTCD</div>
                 </div>
             </div>
             <div class='wallet-nav container'>

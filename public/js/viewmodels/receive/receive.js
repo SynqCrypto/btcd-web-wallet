@@ -8,6 +8,8 @@ define(['knockout','viewmodels/receive/receive-address','viewmodels/common/comma
             var trans = self.isLoadingReceiveAddresses();
             return trans;
         });
+
+        self.showNewAddressDialog = ko.observable(false);
     };
 
     receiveType.prototype.load = function(){
@@ -15,7 +17,12 @@ define(['knockout','viewmodels/receive/receive-address','viewmodels/common/comma
     };
 
     receiveType.prototype.newAddress = function(){
-        
+        var self = this;
+        self.showNewAddressDialog(true);        
+    };
+
+    receiveType.prototype.newAddressCommit = function(){
+        self.showNewAddressDialog(false);
     };
 
     receiveType.prototype.getReceiveAddresses = function(){

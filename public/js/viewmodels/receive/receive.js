@@ -3,7 +3,7 @@ define(['knockout','viewmodels/receive/receive-address','viewmodels/common/comma
         var self = this;
         self.addresses = ko.observableArray([]);
         self.isLoadingReceiveAddresses = ko.observable(false);
-
+        self.wallet = options.parent;
         self.isLoading = ko.computed(function(){
             var trans = self.isLoadingReceiveAddresses();
             return trans;
@@ -17,12 +17,10 @@ define(['knockout','viewmodels/receive/receive-address','viewmodels/common/comma
     };
 
     receiveType.prototype.newAddress = function(){
-        var self = this;
-        self.showNewAddressDialog(true);        
+        this.wallet.openDialog({}, 'modals/new-address');
     };
 
     receiveType.prototype.newAddressCommit = function(){
-        self.showNewAddressDialog(false);
     };
 
     receiveType.prototype.getReceiveAddresses = function(){

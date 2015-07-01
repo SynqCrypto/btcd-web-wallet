@@ -9,20 +9,35 @@ function(ko/*,Send,Receive*/,WalletStatus,Receive,History,Console){
         self.btcdStaking = ko.observable(0);
         self.currentView = ko.observable('send');
 	/*this.Send = new Send(); */
-        self.history = new History(); 
-        self.console = new Console(); 
-        self.receive = new Receive();
-        self.walletStatus = new WalletStatus();
+        self.history = new History({parent: self}); 
+        self.console = new Console({parent: self}); 
+        self.receive = new Receive({parent: self});
+        self.walletStatus = new WalletStatus({parent: self});
         self.encrypt = function(){
-            self.showDialog(!this.showDialog());
+            self.openDialog({text:ko.observable('Test')}, 'modals/placeholder');
         };
+        self.modalView = ko.observable('modals/placeholder');
+        self.modalViewModel = ko.observable({text: ko.observable('Test')});
 
-        self.refresh = function(){
-            self.history.load();
-            self.receive.load();
-            self.walletStatus.load();
-        };
+    };
 
+    walletType.prototype.refresh = function(){
+        this.walletStatus.load();
+        this.history.load();
+        this.receive.load();
+    };
+
+    walletType.prototype.openDialog = function(viewmodel, view, overridefooter){
+        this.showDialog(false);
+        console.log('changing view: ' + view);
+        this.modalView(view);
+        this.modalViewModel(viewmodel);
+        console.log('showing dialog...');
+        this.showDialog(true);
+    };
+    
+    walletType.prototype.closeDialog = function(){
+        this.showDialog(false);
     };
 
     return walletType; 

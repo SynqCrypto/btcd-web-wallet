@@ -9,7 +9,7 @@ define( [ "knockout",  "viewmodels/btcd-wallet", "knockout-amd-helpers", "text",
 
     App.prototype.init = function() {
         var wallet = new Wallet(); 
-        ko.applyBindings(wallet, $('#wallet-container')[0]);
+        ko.applyBindings(wallet, $('body')[0]);
 
 
         Sammy(function() {

@@ -73,8 +73,8 @@ app.get('/getinfo', function(req, res){
 	});
 });
 
-app.get('/getnewaddress', function(req, res){
-	btcd.getnewaddress(function(err, result){
+app.get('/getnewaddress/:account', function(req, res){
+	btcd.getnewaddress(req.params.account, function(err, result){
 		console.log("err:"+err+" result:"+result);
 		if(err)
 			res.send(err);

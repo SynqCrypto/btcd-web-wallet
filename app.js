@@ -83,6 +83,16 @@ app.get('/getnewaddress/:account', function(req, res){
 	});
 });
 
+app.get('/getnewaddress', function(req, res){
+	btcd.getnewaddress(function(err, result){
+		console.log("err:"+err+" result:"+result);
+		if(err)
+			res.send(err);
+		else
+			res.send(JSON.stringify(result));
+	});
+});
+
 app.get('/help', function(req, res){
 	btcd.help(function(err, result){
 		console.log("err:"+err+" result:"+result);
@@ -136,6 +146,16 @@ app.get('/listtransactions', function(req, res){
 
 app.get('/sendfrom/:fromaccount/:toaddress/:amount', function(req, res){
 	btcd.sendfrom(req.params.fromaccount, req.params.toaddress, parseInt(req.params.amount), function(err, result){
+		console.log("err:"+err+" result:"+result);
+		if(err)
+			res.send(err);
+		else
+			res.send(JSON.stringify(result));
+	});
+});
+
+app.get('/setaccount/:address/:account', function(req, res){
+	btcd.setaccount(req.params.address, req.params.account, function(err, result){
 		console.log("err:"+err+" result:"+result);
 		if(err)
 			res.send(err);

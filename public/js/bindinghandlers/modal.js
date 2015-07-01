@@ -9,6 +9,7 @@ define(['knockout'], function(ko){
             var value = valueAccessor();
             if (typeof value === 'function') {
                 $(element).on('hide.bs.modal', function() {
+
                     value(false);
                 });
             }

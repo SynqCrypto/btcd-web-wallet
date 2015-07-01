@@ -14,7 +14,7 @@ function(ko/*,Send,Receive*/,WalletStatus,Receive,History,Console){
         self.receive = new Receive({parent: self});
         self.walletStatus = new WalletStatus({parent: self});
         self.encrypt = function(){
-            self.openDialog({text:ko.observable('Test')}, 'modals/placeholder');
+            self.openDialog({ text:ko.observable('Test')}, 'modals/placeholder');
         };
         self.modalView = ko.observable('modals/placeholder');
         self.modalViewModel = ko.observable({text: ko.observable('Test')});
@@ -29,10 +29,8 @@ function(ko/*,Send,Receive*/,WalletStatus,Receive,History,Console){
 
     walletType.prototype.openDialog = function(viewmodel, view, overridefooter){
         this.showDialog(false);
-        console.log('changing view: ' + view);
         this.modalView(view);
         this.modalViewModel(viewmodel);
-        console.log('showing dialog...');
         this.showDialog(true);
     };
     

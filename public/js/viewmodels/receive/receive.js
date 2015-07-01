@@ -1,4 +1,4 @@
-define(['knockout','viewmodels/receive/receive-address','viewmodels/common/command'], function(ko,ReceiveAddress,Command){
+define(['knockout','viewmodels/receive/receive-address','viewmodels/common/command','viewmodels/receive/new-address-dialog'], function(ko,ReceiveAddress,Command,NewAddressDialog){
     var receiveType = function(options){
         var self = this;
         self.addresses = ko.observableArray([]);
@@ -8,7 +8,7 @@ define(['knockout','viewmodels/receive/receive-address','viewmodels/common/comma
             var trans = self.isLoadingReceiveAddresses();
             return trans;
         });
-
+        self.newAddressDialog = new NewAddressDialog({parent:self});
         self.showNewAddressDialog = ko.observable(false);
     };
 
@@ -17,10 +17,21 @@ define(['knockout','viewmodels/receive/receive-address','viewmodels/common/comma
     };
 
     receiveType.prototype.newAddress = function(){
-        this.wallet.openDialog({}, 'modals/new-address');
+        this.wallet.openDialog(this.newAddressDialog, 'modals/new-address');
     };
 
-    receiveType.prototype.newAddressCommit = function(){
+    receiveType.prototype.newAddressConfirm = function(dialogAddress,label){
+        var self = this, getNewAddressCommand = new Command('getnewaddress',[label]);
+        getNewAddressCommand.execute()
+            .done(function(address){
+                self.addresses.push(new ReceiveAddress({address:{ address: address, account: label }}));
+            });
+
+        this.wallet.closeDialog();
+    };
+
+    receiveType.prototype.newAddressCancel = function(){
+        this.wallet.closeDialog();        
     };
 
     receiveType.prototype.getReceiveAddresses = function(){

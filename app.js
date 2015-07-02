@@ -53,6 +53,16 @@ var server = http.createServer(app).listen(app.get('port'), function(err, result
 //	});
 //});
 
+app.get('/getaccount/:address', function(req, res){
+	btcd.getaccount(req.params.address, function(err, result){
+		console.log("err:"+err+" result:"+result);
+		if(err)
+			res.send(err);
+		else
+			res.send(JSON.stringify(result));
+	});
+});
+
 app.get('/getbalance', function(req, res){
 	btcd.getbalance(function(err, result){
 		console.log("err:"+err+" result:"+result);
@@ -156,6 +166,16 @@ app.get('/sendfrom/:fromaccount/:toaddress/:amount', function(req, res){
 
 app.get('/setaccount/:address/:account', function(req, res){
 	btcd.setaccount(req.params.address, req.params.account, function(err, result){
+		console.log("err:"+err+" result:"+result);
+		if(err)
+			res.send(err);
+		else
+			res.send(JSON.stringify(result));
+	});
+});
+
+app.get('/setadressbookname/:address/:label', function(req, res){
+	btcd.setadressbookname(req.params.address, req.params.label, function(err, result){
 		console.log("err:"+err+" result:"+result);
 		if(err)
 			res.send(err);

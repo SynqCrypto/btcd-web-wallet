@@ -29,8 +29,9 @@ function(ko/*,Send,Receive*/,WalletStatus,Receive,History,Console){
 
     walletType.prototype.openDialog = function(viewmodel, view, overridefooter){
         this.showDialog(false);
-        this.modalView(view);
+        this.modalView('modals/placeholder');
         this.modalViewModel(viewmodel);
+        this.modalView(view);
         this.showDialog(true);
     };
     

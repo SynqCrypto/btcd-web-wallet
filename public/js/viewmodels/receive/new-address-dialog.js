@@ -6,8 +6,8 @@ define(['knockout'],function(ko){
     };
 
     newAddressDialogType.prototype.newAddressConfirm = function(){
-       this.reset();
        this.parent.newAddressConfirm(this.address(), this.addressLabel()); 
+       this.reset();
     };
 
     newAddressDialogType.prototype.newAddressCancel = function(){

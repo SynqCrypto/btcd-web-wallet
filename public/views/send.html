@@ -7,12 +7,12 @@
                 <input type="text" class="form-control" id="recipient" placeholder="Enter a BitcoinDark address (e.g. RCGwFEaCKE1QB8oMi9NUSpic9qD1Cfk2Rf)">
             </div>
         </div>
-        <div class="form-group">
+        <!--<div class="form-group">
             <label class="control-label col-sm-2" for="label">Label:</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="label" placeholder="Enter a label for this address to add it to your address book">
             </div>
-        </div>
+        </div>-->
         <div class="form-group">
             <label class="control-label col-sm-2" for="amount">Amount:</label>
             <div class="col-sm-4">
@@ -21,15 +21,15 @@
             <div class="col-sm-2">
             <select class="form-control" id="sel1">
                 <option>BTCD</option>
-                <option>mBTCD</option>
-                <option>µBTCD</option>
+                <!--<option>mBTCD</option>
+                <option>µBTCD</option>-->
             </select>
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-default">Submit</button>
+                <button type="submit" class="btn btn-default" data-bind="click: executeSend">Submit</button>
             </div>
         </div>
     </form>

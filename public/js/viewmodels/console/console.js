@@ -7,7 +7,8 @@ define(['knockout'], function(ko){
 
     function parseCommand(commandText){
         var url = 'http://127.0.0.1:8080/';
-        url = url.concat(commandText.replace(' ','/'));
+        commandText.replace(new RegExp(' ','g') );
+        url = url.concat(commandText.replace(new RegExp(' ','g'), '/'));
         return url;
     }
 
@@ -20,9 +21,18 @@ define(['knockout'], function(ko){
             url: parseCommand(self.commandText()),
             dataType: 'json'
         }).done(function(data){
+            var result;
+            if( toString.call(data) === "[object String]"){
+                result = data;
+            }
+            else{
+                result = JSON.stringify(data, null, 4);
+            }
+            self.commandOutput(result);                
+        }).fail(function(jqXHR, textStatus, errorThrown){
+            self.commandOutput(errorThrown);   
+        }).always(function(){
             self.isLoading(false);
-            console.log(data);
-            self.commandOutput(data);                
         });
     };
     return consoleType; 

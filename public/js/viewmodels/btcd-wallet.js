@@ -1,5 +1,5 @@
-define(['knockout','viewmodels/wallet-status'/*,'viewmodels/send/send'*/,'viewmodels/receive/receive','viewmodels/history/history','viewmodels/console/console', 'bindinghandlers/modal'], 
-function(ko/*,Send,Receive*/,WalletStatus,Receive,History,Console){
+define(['knockout','viewmodels/wallet-status','viewmodels/send/send','viewmodels/receive/receive','viewmodels/history/history','viewmodels/console/console', 'bindinghandlers/modal'], 
+function(ko, WalletStatus, Send, Receive, History, Console, Modal){
 
     var walletType = function(options){
         var self = this;
@@ -8,7 +8,7 @@ function(ko/*,Send,Receive*/,WalletStatus,Receive,History,Console){
         self.btcdAvailable = ko.observable(0);
         self.btcdStaking = ko.observable(0);
         self.currentView = ko.observable('send');
-	/*this.Send = new Send(); */
+        self.send = new Send({parent: self}); 
         self.history = new History({parent: self}); 
         self.console = new Console({parent: self}); 
         self.receive = new Receive({parent: self});
@@ -27,7 +27,7 @@ function(ko/*,Send,Receive*/,WalletStatus,Receive,History,Console){
         this.receive.load();
     };
 
-    walletType.prototype.openDialog = function(viewmodel, view, overridefooter){
+    walletType.prototype.openDialog = function(viewmodel, view){
         this.showDialog(false);
         this.modalView('modals/placeholder');
         this.modalViewModel(viewmodel);

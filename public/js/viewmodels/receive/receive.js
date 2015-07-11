@@ -1,4 +1,4 @@
-define(['knockout','viewmodels/receive/receive-address','viewmodels/common/command','viewmodels/receive/new-address-dialog'], function(ko,ReceiveAddress,Command,NewAddressDialog){
+define(['knockout','common/dialog','viewmodels/receive/receive-address','viewmodels/common/command','viewmodels/receive/new-address-dialog'], function(ko,dialog,ReceiveAddress,Command,NewAddressDialog){
     var receiveType = function(options){
         var self = this;
         self.addresses = ko.observableArray([]);
@@ -17,7 +17,7 @@ define(['knockout','viewmodels/receive/receive-address','viewmodels/common/comma
     };
 
     receiveType.prototype.newAddress = function(){
-        this.wallet.openDialog(this.newAddressDialog, 'modals/new-address');
+        dialog.openDialog(this.newAddressDialog, 'modals/new-address');
     };
 
     receiveType.prototype.newAddressConfirm = function(dialogAddress,label){
@@ -27,11 +27,11 @@ define(['knockout','viewmodels/receive/receive-address','viewmodels/common/comma
                 self.addresses.push(new ReceiveAddress({address:{ address: address, account: label }}));
             });
 
-        this.wallet.closeDialog();
+        dialog.closeDialog();
     };
 
     receiveType.prototype.newAddressCancel = function(){
-        this.wallet.closeDialog();        
+        dialog.closeDialog();        
     };
 
     receiveType.prototype.getReceiveAddresses = function(){

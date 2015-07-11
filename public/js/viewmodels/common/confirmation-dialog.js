@@ -1,4 +1,4 @@
-define(['knockout'], function(ko) {
+define(['knockout','common/dialog'], function(ko,dialog) {
     var confirmationDialogType = function(options){
         this.wallet = options.wallet || options.context.parent || { openDialog: function() { alert('No dialog container'); }, closeDialog: function() { } };
         this.context = options.context || this;
@@ -14,21 +14,21 @@ define(['knockout'], function(ko) {
     };
 
     confirmationDialogType.prototype.open = function(){
-        this.wallet.openDialog(this,this.template);
+        dialog.openDialog(this,this.template);
     };
 
     confirmationDialogType.prototype.close = function(){
-        this.wallet.closeDialog();
+        dialog.closeDialog();
     };
 
     confirmationDialogType.prototype.affirmative = function() {
         this.affirmativeHandler.call(this.context);
-        this.wallet.closeDialog();
+        dialog.closeDialog();
     };
 
     confirmationDialogType.prototype.negative = function(){
         this.negativeHandler.call(this.context);
-        this.wallet.closeDialog();
+        dialog.closeDialog();
     };
 
     return confirmationDialogType;

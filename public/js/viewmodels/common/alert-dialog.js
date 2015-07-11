@@ -1,10 +1,8 @@
 define(['knockout','common/confirmation-dialog'], function(ko,ConfirmationDialog) {
     var alertDialogType = function(options){
-        this.wallet = options.wallet || options.context.parent || { openDialog: function() { alert('No dialog container'); }, closeDialog: function() { } };
-        this.context = options.context || this;
+        this.h
         this.title = options.title || "Notification";
         this.affirmativeHandler = options.affirmativeHandler;
-        this.negativeHandler = options.negativeHandler;
         
         this.contentTemplate = options.contentTemplate || "modals/confirmation-message";
         this.message = options.message || "";
@@ -13,11 +11,15 @@ define(['knockout','common/confirmation-dialog'], function(ko,ConfirmationDialog
 
         options.title = options.title || "Alert";
         options.template = options.template || "modals/alert-dialog";
-
+        
+        ConfirmationDialog.call(this,alertOptions);
+       
         // call ConfirmationDialog( { 
         //  
         // })
     };
+
+    alertDialogType.prototype = new ConfirmationDialog();
 
     confirmationDialogType.prototype.open = function(){
         this.wallet.openDialog(this,"modals/confirmation-dialog");

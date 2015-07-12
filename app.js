@@ -164,6 +164,18 @@ app.get('/sendfrom/:fromaccount/:toaddress/:amount', function(req, res){
 	});
 });
 
+//sendtoaddress <BitcoinDarkaddress> <amount> [comment] [comment-to]
+// TODO: Add optional comments
+app.get('/sendtoaddress/:toaddress/:amount', function(req, res){
+	btcd.sendfrom(req.params.toaddress, req.params.amount, parseInt(req.params.amount), function(err, result){
+		console.log("err:"+err+" result:"+result);
+		if(err)
+			res.send(err);
+		else
+			res.send(JSON.stringify(result));
+	});
+});
+
 app.get('/setaccount/:address/:account', function(req, res){
 	btcd.setaccount(req.params.address, req.params.account, function(err, result){
 		console.log("err:"+err+" result:"+result);

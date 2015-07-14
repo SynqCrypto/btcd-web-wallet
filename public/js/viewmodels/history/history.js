@@ -24,7 +24,7 @@ define(['knockout','viewmodels/history/transaction','viewmodels/common/command']
                 }));
                 self.isLoadingTransactions(false); 
             })
-            .error(function(){
+            .fail(function(){
             })
             .always(function(){
             });

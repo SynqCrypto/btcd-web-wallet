@@ -25,6 +25,10 @@ define(['knockout','common/dialog','viewmodels/receive/receive-address','viewmod
         getNewAddressCommand.execute()
             .done(function(address){
                 self.addresses.push(new ReceiveAddress({address:{ address: address, account: label }}));
+            })
+            .fail(function(){
+            })
+            .always(function(){
             });
 
         dialog.closeDialog();
@@ -44,7 +48,7 @@ define(['knockout','common/dialog','viewmodels/receive/receive-address','viewmod
                 }));
                 self.isLoadingReceiveAddresses(false); 
             })
-            .error(function(){
+            .fail(function(){
             })
             .always(function(){
             });

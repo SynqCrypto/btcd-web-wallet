@@ -8,15 +8,24 @@ define(['knockout','common/dialog','viewmodels/common/confirmation-dialog'], fun
     };
 
     sendType.prototype.minerFeeConfirm = function(){
-        var confirmDialog = new ConfirmationDialog({
-            title: 'Miner Fee Confirmation',
-            contentTemplate: "modals/miner-fee-confirmation",
-            context: this,
-            affirmativeHandler: function() { alert("Affirmative handler for miner fee confirm"); },
-            negativeHandler: function() { alert("Affirmative handler for miner fee cancel"); },
-            message: "Do you want to accept the miner fee?",
-            negativeButtonText: "No"            
-        }).open();
+        var self = this,
+            confirmDialog = new ConfirmationDialog({
+                title: 'Miner Fee Confirmation',
+                contentTemplate: "modals/miner-fee-confirmation",
+                context: this,
+                affirmativeHandler: self.minerFeeConfirmYes,
+                negativeHandler: self.minerFeeConfirmNo,
+                message: "Do you want to accept the miner fee?",
+                negativeButtonText: "No"            
+            }).open();
+    };
+    
+    sendType.prototype.minerFeeConfirmYes = function(){
+        alert("Affirmative handler for miner fee confirm");
+    };
+
+    sendType.prototype.minerFeeConfirmNo = function(){
+        alert("Negative handler for miner fee confirm");
     };
 
     sendType.prototype.insufficientFundsMessage = function(){

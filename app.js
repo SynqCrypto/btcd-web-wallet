@@ -36,6 +36,51 @@ var server = http.createServer(app).listen(app.get('port'), function(err, result
     console.log('Express server listening on port ' + app.get('port'));
 });
 
+Object.defineProperty(Error.prototype, 'toJSON', {
+    value: function () {
+        var alt = {};
+        Object.getOwnPropertyNames(this).forEach(function (key) {
+            alt[key] = this[key];
+        }, this);
+        return alt;
+    },
+    configurable: true
+});
+
+function callBtcd(fn, res, handler) {
+    var args = Array.prototype.slice.call(arguments, 3);
+    var callargs = args.concat([handler.bind({res:res})]);
+    return fn.apply(btcd, callargs);
+}
+
+function btcdHandler(err, result){
+    console.log("err:"+err+" result:"+result);
+    var response = {
+        error: JSON.parse(err ? err.message : null),
+        result: result
+    };
+    this.res.send(JSON.stringify(response));
+}
+
+app.get('/getinfo', function(req,res){ callBtcd(btcd.getInfo, res, btcdHandler); } );
+
+app.get('/getnewaddress/:account', function(req, res){ 
+    var accountName = req.params.account;
+    callBtcd(btcd.getnewaddress, res, btcdHandler, accountName) 
+});
+
+app.get('/listtransactions', function(req, res){ callBtcd(btcd.listtransactions,res,btcdHandler )});
+
+app.get('/listreceivedbyaddress/:minconf/:includeempty', function(req, res){
+    var includeEmpty = req.params.includeempty === 'true',
+        minConf = parseInt(req.params.minconf);
+	callBtcd(btcd.listreceivedbyaddress, res, btcdHandler, minConf, includeEmpty);
+});
+
+app.get('/sendtoaddress/:toaddress/:amount', function(req, res){
+	btcd.sendtoaddress(req.params.toaddress, parseInt(req.params.amount), btcdHandler);
+});
+
 //app.get('/', function(req,res){
 //	res.render('index');
 //	});
@@ -73,25 +118,6 @@ app.get('/getbalance', function(req, res){
 	});
 });
 
-app.get('/getinfo', function(req, res){
-	btcd.getinfo(function(err, result){
-		console.log("err:"+err+" result:"+result);
-		if(err)
-			res.send(err);
-		else
-			res.send(JSON.stringify(result));
-	});
-});
-
-app.get('/getnewaddress/:account', function(req, res){
-	btcd.getnewaddress(req.params.account, function(err, result){
-		console.log("err:"+err+" result:"+result);
-		if(err)
-			res.send(err);
-		else
-			res.send(JSON.stringify(result));
-	});
-});
 
 app.get('/getnewaddress', function(req, res){
 	btcd.getnewaddress(function(err, result){
@@ -133,7 +159,7 @@ app.get('/listaddressgroupings', function(req, res){
 			res.send(JSON.stringify(result));
 	});
 });
-
+/*
 app.get('/listreceivedbyaddress/:minconf/:includeempty', function(req, res){
 	btcd.listreceivedbyaddress(parseInt(req.params.minconf),req.params.includeempty === "true", function(err, result){
 		console.log("err:"+err+" result:"+result);
@@ -142,17 +168,19 @@ app.get('/listreceivedbyaddress/:minconf/:includeempty', function(req, res){
 		else
 			res.send(JSON.stringify(result));
 	});
-});
+});*/
 
+/*
 app.get('/listtransactions', function(req, res){
 	btcd.listtransactions(function(err, result){
 		console.log("err:"+err+" result:"+result);
+        res.send(JSON.stringify(packageResponse(err, result)));
 		if(err)
 			res.send(err);
 		else
 			res.send(JSON.stringify(result));
 	});
-});
+});*/
 
 app.get('/sendfrom/:fromaccount/:toaddress/:amount', function(req, res){
 	btcd.sendfrom(req.params.fromaccount, req.params.toaddress, parseInt(req.params.amount), function(err, result){
@@ -166,15 +194,22 @@ app.get('/sendfrom/:fromaccount/:toaddress/:amount', function(req, res){
 
 //sendtoaddress <BitcoinDarkaddress> <amount> [comment] [comment-to]
 // TODO: Add optional comments
-app.get('/sendtoaddress/:toaddress/:amount', function(req, res){
-	btcd.sendfrom(req.params.toaddress, req.params.amount, parseInt(req.params.amount), function(err, result){
+/*app.get('/sendtoaddress/:toaddress/:amount', function(req, res){
+    function formatError(err){
+        return err.substr(err.indexOf('{'));
+    }
+
+	btcd.sendtoaddress(req.params.toaddress, parseInt(req.params.amount), function(err, result){
 		console.log("err:"+err+" result:"+result);
-		if(err)
-			res.send(err);
+        res.send(JSON.stringify(packageResponse(err, result)));
+		if(err){
+			res.send(err.message);
+        }
 		else
 			res.send(JSON.stringify(result));
+        
 	});
-});
+});*/
 
 app.get('/setaccount/:address/:account', function(req, res){
 	btcd.setaccount(req.params.address, req.params.account, function(err, result){

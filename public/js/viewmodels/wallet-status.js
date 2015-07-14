@@ -20,7 +20,7 @@ define(['knockout','viewmodels/common/command'],function(ko,Command){
                 self.stake(data.stake);
                 self.isLoadingStatus(false); 
             })
-            .error(function(){
+            .fail(function(){
             })
             .always(function(){
             });

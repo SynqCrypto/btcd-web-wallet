@@ -15,15 +15,22 @@ define(['knockout'],function(ko){
     }
 
     commandType.prototype.execute = function(){
-        var self = this;
-        return $.ajax({
+        var self = this, deferred = $.Deferred();
+        $.ajax({
             async: true,
             method: 'GET',
             url: parseCommand(self.commandName(), self.args()),
             dataType: 'json'
         }).done(function(data){
             console.log(data);
+            if(data.error){
+                deferred.reject(data.error);
+            }
+            else{
+                deferred.resolve(data.result);
+            }
         });
+        return deferred.promise();
     };
 
     return commandType;

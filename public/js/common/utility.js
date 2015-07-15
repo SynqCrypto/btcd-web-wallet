@@ -14,5 +14,6 @@ define([],function(){
             return formatDate(unixToDate(unixTime));
         },
     };
+
     return utility;
 });

@@ -47,10 +47,10 @@ Object.defineProperty(Error.prototype, 'toJSON', {
     configurable: true
 });
 
-function callBtcd(fn, res, handler) {
+function callBtcd(command, res, handler) {
     var args = Array.prototype.slice.call(arguments, 3);
     var callargs = args.concat([handler.bind({res:res})]);
-    return fn.apply(btcd, callargs);
+    return btcd[command].apply(btcd, callargs);
 }
 
 function btcdHandler(err, result){
@@ -62,25 +62,29 @@ function btcdHandler(err, result){
     this.res.send(JSON.stringify(response));
 }
 
-app.get('/getinfo', function(req,res){ callBtcd(btcd.getInfo, res, btcdHandler); } );
+app.get('/getinfo', function(req,res){ callBtcd('getInfo', res, btcdHandler); } );
 
-app.get('/getnewaddress/:account', function(req, res){ 
-    var accountName = req.params.account;
-    callBtcd(btcd.getnewaddress, res, btcdHandler, accountName) 
+app.get('/getnewaddress/:account?', function(req, res){ 
+    callBtcd('getnewaddress', res, btcdHandler, req.params.account) 
 });
 
-app.get('/listtransactions', function(req, res){ callBtcd(btcd.listtransactions,res,btcdHandler )});
+app.get('/listtransactions', function(req, res){ callBtcd('listtransactions', res, btcdHandler )});
 
-app.get('/listreceivedbyaddress/:minconf/:includeempty', function(req, res){
-    var includeEmpty = req.params.includeempty === 'true',
-        minConf = parseInt(req.params.minconf);
-	callBtcd(btcd.listreceivedbyaddress, res, btcdHandler, minConf, includeEmpty);
+app.get('/listreceivedbyaddress/:minconf?/:includeempty?', function(req, res){
+    var includeEmpty = (req.params.includeempty || false) === 'true', 
+        minConf = parseInt(req.params.minconf || 1);
+	callBtcd('listreceivedbyaddress', res, btcdHandler, minConf, includeEmpty);
 });
 
 app.get('/sendtoaddress/:toaddress/:amount', function(req, res){
-	btcd.sendtoaddress(req.params.toaddress, parseInt(req.params.amount), btcdHandler);
+    var amount = parseInt(req.params.amount);
+    callBtcd('sendtoaddress', res, btcdHandler, req.params.toAddress, amount);
 });
 
+app.get('/walletpassphrase/:passphrase/:stakingonly?', function(req,res){
+    var stakingOnly = req.params.stakingonly || true;
+    callBtcd('walletpassphrase', res, btcdHandler, req.params.passphrase, stakingOnly);
+});
 //app.get('/', function(req,res){
 //	res.render('index');
 //	});

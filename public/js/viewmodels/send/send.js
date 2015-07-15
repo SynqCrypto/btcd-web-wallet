@@ -5,6 +5,7 @@ define(['knockout','common/dialog','viewmodels/common/confirmation-dialog'], fun
         this.recipientAddress = ko.observable("");
         this.amount = ko.observable(sendOptions.amount || 0.0);
         this.minerFee = ko.observable(sendOptions.minerFee || 0.0001);
+        this.walletPassPhrase = ko.observable("");
     };
 
     sendType.prototype.minerFeeConfirm = function(){
@@ -19,6 +20,7 @@ define(['knockout','common/dialog','viewmodels/common/confirmation-dialog'], fun
                 negativeButtonText: "No"            
             }).open();
     };
+
     
     sendType.prototype.minerFeeConfirmYes = function(){
         alert("Affirmative handler for miner fee confirm");

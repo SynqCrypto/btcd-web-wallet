@@ -1,8 +1,8 @@
 require.config({
     paths: {
-        knockout: "knockout-3.3.0.debug",
-        'knockout-amd-helpers': 'knockout-amd-helpers',
-        text: "text"
+        knockout: "lib/knockout-3.3.0.debug",
+        'knockout-amd-helpers': 'lib/knockout-amd-helpers',
+        text: "lib/text"
     }
 });
  

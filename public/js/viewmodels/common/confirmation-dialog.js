@@ -6,6 +6,7 @@ define(['knockout','common/dialog'], function(ko,dialog) {
         this.affirmativeHandler = options.affirmativeHandler;
         this.negativeHandler = options.negativeHandler;
         this.template = options.template || "modals/confirmation-dialog";
+        this.canAffirm = options.canAffirm || true;
         
         this.contentTemplate = options.contentTemplate || "modals/confirmation-message";
         this.message = options.message || "";
@@ -22,13 +23,15 @@ define(['knockout','common/dialog'], function(ko,dialog) {
     };
 
     confirmationDialogType.prototype.affirmative = function() {
-        this.affirmativeHandler.call(this.context);
-        dialog.closeDialog();
+        if(this.canAffirm()){
+            dialog.closeDialog();
+            this.affirmativeHandler.call(this.context);
+        }
     };
 
     confirmationDialogType.prototype.negative = function(){
-        this.negativeHandler.call(this.context);
         dialog.closeDialog();
+        this.negativeHandler.call(this.context);
     };
 
     return confirmationDialogType;

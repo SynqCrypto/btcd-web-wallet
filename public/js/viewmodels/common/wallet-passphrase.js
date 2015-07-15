@@ -1,8 +1,13 @@
 define(['knockout','common/dialog','viewmodels/common/confirmation-dialog','viewmodels/common/command'], function(ko,dialog,ConfirmationDialog,Command) {
     var walletPassphraseType = function(options){
+        var self = this;
         this.walletPassphrase = ko.observable('');
         this.stakingOnly = ko.observable(true);
         this.stakingOnlyDisabled = false;
+        this.canSubmit = ko.computed(function(){
+            return true;
+            //return self.walletPassphrase().length > 0;
+        });
     };
 
     walletPassphraseType.prototype.userPrompt = function(title, message, affirmativeButtonText){
@@ -11,6 +16,7 @@ define(['knockout','common/dialog','viewmodels/common/confirmation-dialog','view
                 title: title || 'Wallet passphrase',
                 contentTemplate: "modals/password-prompt",
                 context: self,
+                canAffirm: self.canSubmit,
                 affirmativeButtonText: affirmativeButtonText,
                 affirmativeHandler: function(walletPassphrsaeDeferred){
                     self.openWallet()

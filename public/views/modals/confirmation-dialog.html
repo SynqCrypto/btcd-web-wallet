@@ -9,5 +9,5 @@
 </div>
 <div class="modal-footer" data-bind="$data.displayfooter">
     <button type="button" class="btn btn-default" data-dismiss="modal" data-bind="click: negative, text: negativeButtonText"></button>
-    <button type="button" class="btn btn-primary" data-bind="click: affirmative, text: affirmativeButtonText"></button>
+    <button type="button" class="btn btn-primary" data-bind="enable: canAffirm, click: affirmative, text: affirmativeButtonText"></button>
 </div>

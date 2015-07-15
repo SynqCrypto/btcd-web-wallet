@@ -16,11 +16,11 @@ function(ko, dialog, WalletStatus, Send, Receive, History, Console, Modal, Walle
             new WalletPassphrase().userPrompt('Wallet unlock', 'Unlock the wallet for sending','OK')
                 .done(function(result){
                     console.log(result);
-                    //dialog.notification("Success");
+                    dialog.notification("Success");
                 })
                 .fail(function(error){
                     console.log(error);
-                    //dialog.notification("Error");
+                    dialog.notification(error.message);
                 });
             //dialog.openDialog({ text:ko.observable('Test')}, 'modals/placeholder');
         };

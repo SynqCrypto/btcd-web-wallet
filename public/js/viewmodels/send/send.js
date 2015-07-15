@@ -8,9 +8,9 @@ define(['knockout','common/dialog','viewmodels/common/confirmation-dialog'], fun
         this.walletPassPhrase = ko.observable("");
     };
 
-    sendType.prototype.minerFeeConfirm = function(){
+    sendType.prototype.unlockWallet= function(){
         var self = this,
-            confirmDialog = new ConfirmationDialog({
+            /*confirmDialog = new ConfirmationDialog({
                 title: 'Miner Fee Confirmation',
                 contentTemplate: "modals/miner-fee-confirmation",
                 context: this,
@@ -18,24 +18,52 @@ define(['knockout','common/dialog','viewmodels/common/confirmation-dialog'], fun
                 negativeHandler: self.minerFeeConfirmNo,
                 message: "Do you want to accept the miner fee?",
                 negativeButtonText: "No"            
-            }).open();
+            }).open();*/
+
+            //dialog.openDialog({ text:ko.observable('Test')}, 'modals/placeholder');
+
+            passphraseDialogPromise = new WalletPassphrase().userPrompt('Wallet unlock', 'Unlock the wallet for sending','OK')
+                /*.done(function(result){
+                    console.log(result);
+                    dialog.notification("Success");
+                })
+                .fail(function(error){
+                    console.log(error);
+                    dialog.notification(error.message);
+                })*/;
+
+            return passphraseDialogPromise;
     };
 
     
-    sendType.prototype.minerFeeConfirmYes = function(){
+    /*sendType.prototype.minerFeeConfirmYes = function(){
         alert("Affirmative handler for miner fee confirm");
     };
 
     sendType.prototype.minerFeeConfirmNo = function(){
         alert("Negative handler for miner fee confirm");
-    };
+    };*/
 
     sendType.prototype.insufficientFundsMessage = function(){
         dialog.notification("Insufficient funds");
     };
     
     sendType.prototype.executeSend = function(){
-        this.minerFeeConfirm();
+        var self = this;
+        this.unlockWallet()
+            .done(function(result){
+                sendCommand = new Command('sendToAddress', [self.recipientAddress(), self.amount()]).execute();
+                    .done(function(result){
+                    })
+                    .fail(function(error){
+                        dialog.notification(error.message, "Send Error");
+                    })
+                    .always(function(){
+                    });
+            })
+            .fail(function(error){
+                dialog.notification(error.message);
+            });
     };
     
     return sendType; 

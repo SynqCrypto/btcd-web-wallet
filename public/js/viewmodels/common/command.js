@@ -24,12 +24,18 @@ define(['knockout'],function(ko){
         }).done(function(data){
             console.log(data);
             if(data.error){
-                deferred.reject(data.error);
+                deferred.reject(data.error.error);
             }
             else{
                 deferred.resolve(data.result);
             }
-        });
+        }).fail(function(jqXHR,textStatus,errorThrown){
+            console.log("Ajax call failure: ");
+            console.log(jqXHR);
+            console.log(textStatus);
+            console.log(errorThrown);
+            deferred.reject({ code: jqXHR.status, message: "Request failed: " + jqXHR.responseText });
+        });;
         return deferred.promise();
     };
 

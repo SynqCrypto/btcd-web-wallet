@@ -1,4 +1,4 @@
-define(['knockout','common/dialog','viewmodels/common/confirmation-dialog'], function(ko,dialog,ConfirmationDialog){
+define(['knockout','common/dialog','viewmodels/common/confirmation-dialog','viewmodels/common/wallet-passphrase'], function(ko,dialog,ConfirmationDialog,WalletPassphrase){
     var sendType = function(options){
         var sendOptions = options || {};
         this.wallet= sendOptions.wallet;

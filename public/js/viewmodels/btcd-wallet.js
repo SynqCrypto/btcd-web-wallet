@@ -7,6 +7,7 @@ function(ko, dialog, WalletStatus, Send, Receive, History, Console, Modal, Walle
         self.btcdAvailable = ko.observable(0);
         self.btcdStaking = ko.observable(0);
         self.currentView = ko.observable('send');
+        self.sidebarToggled = ko.observable(false);
         self.send = new Send({parent: self}); 
         self.history = new History({parent: self}); 
         self.console = new Console({parent: self}); 
@@ -25,12 +26,22 @@ function(ko, dialog, WalletStatus, Send, Receive, History, Console, Modal, Walle
             //dialog.openDialog({ text:ko.observable('Test')}, 'modals/placeholder');
         };
 
+        self.currentView.subscribe(function(view){
+
+        });
+
+        
+
     };
 
     walletType.prototype.walletPassphraseAffirmative = function(){
     };
 
-    walletType.prototype.refresh = function(){
+    walletType.prototype.toggleSidebar = function(){
+        this.sidebarToggled(!this.sidebarToggled());
+    };
+
+    walletType.prototype.refresh = function(refreshTargets){
         this.walletStatus.load();
         this.history.load();
         this.receive.load();

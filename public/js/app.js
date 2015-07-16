@@ -10,7 +10,7 @@ define( [ "knockout",  "viewmodels/btcd-wallet", "common/dialog", "knockout-amd-
     App.prototype.init = function() {
         var wallet = new Wallet();  
 
-        ko.applyBindings(wallet, $('#wallet-container')[0]);
+        ko.applyBindings(wallet, $('#wrapper')[0]);
         dialog.init($('#defaultModal')[0]);         
 
         Sammy(function() {

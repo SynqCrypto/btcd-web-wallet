@@ -1,7 +1,7 @@
 define(['knockout','common/dialog','viewmodels/common/confirmation-dialog'], function(ko,dialog,ConfirmationDialog){
     var sendType = function(options){
         var sendOptions = options || {};
-        this.parent = sendOptions.parent;
+        this.wallet= sendOptions.wallet;
         this.recipientAddress = ko.observable("");
         this.amount = ko.observable(sendOptions.amount || 0.0);
         this.minerFee = ko.observable(sendOptions.minerFee || 0.0001);
@@ -23,15 +23,6 @@ define(['knockout','common/dialog','viewmodels/common/confirmation-dialog'], fun
             //dialog.openDialog({ text:ko.observable('Test')}, 'modals/placeholder');
 
             passphraseDialogPromise = new WalletPassphrase().userPrompt('Wallet unlock', 'Unlock the wallet for sending','OK')
-                /*.done(function(result){
-                    console.log(result);
-                    dialog.notification("Success");
-                })
-                .fail(function(error){
-                    console.log(error);
-                    dialog.notification(error.message);
-                })*/;
-
             return passphraseDialogPromise;
     };
 
@@ -48,23 +39,30 @@ define(['knockout','common/dialog','viewmodels/common/confirmation-dialog'], fun
         dialog.notification("Insufficient funds");
     };
     
-    sendType.prototype.executeSend = function(){
+    sendType.prototype.sendSubmit = function(){
         var self = this;
         this.unlockWallet()
             .done(function(result){
-                sendCommand = new Command('sendToAddress', [self.recipientAddress(), self.amount()]).execute();
-                    .done(function(result){
-                    })
-                    .fail(function(error){
-                        dialog.notification(error.message, "Send Error");
-                    })
-                    .always(function(){
-                    });
+                sendToAddress();
             })
             .fail(function(error){
                 dialog.notification(error.message);
             });
     };
+    
+    sendType.prototype.sendToAddress = function() { 
+        var self = this;
+        sendCommand = new Command('sendToAddress', [self.recipientAddress(), self.amount()]).execute()
+            .done(function(result){
+                dialog.notification("Send Success"); 
+                self.parent.refresh();
+            })
+            .fail(function(error){
+                dialog.notification(error.message, "Send Error");
+            })
+            .always(function(){
+            });
+    }; 
     
     return sendType; 
 });

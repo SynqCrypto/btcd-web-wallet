@@ -1,15 +1,18 @@
 <div class="container" data-bind="with: console">
-    <h2>Console</h2>
+    <!-- ko if: isLoading --><p>Loading...</p><!--/ko -->
+    <div class="row console-out">
+        <div class="col-sm-12">
+        <pre class="pre-scrollable " data-bind="text: commandOutput" />
+        </div>
+    </div>
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-sm-12">
             <div class="input-group">
-                <input type="text" class="form-control input-lg" placeholder="Console Command" data-bind="textInput: commandText">
+                <input type="text" class="form-control input-sm" placeholder="Console Command" data-bind="textInput: commandText">
                 <span class="input-group-btn">
-                    <button class="btn btn-primary btn-lg" type="button" data-bind="click: runCommand">Run</button>
+                    <button class="btn btn-primary btn-sm" type="button" data-bind="click: runCommand">Run</button>
                 </span>
             </div><!-- /input-group -->
         </div><!-- /.col-lg-6 -->
     </div><!-- /.row -->
-    <!-- ko if: isLoading --><p>Loading...</p><!--/ko -->
-    <pre class="pre-scrollable" data-bind="text: commandOutput" />
 </div>

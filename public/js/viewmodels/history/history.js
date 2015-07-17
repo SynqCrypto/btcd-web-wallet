@@ -17,17 +17,16 @@ define(['knockout','viewmodels/history/transaction','viewmodels/common/command']
     historyType.prototype.getTransactions = function(){
         var self = this, getTransactionsCommand = new Command('listtransactions',[]);
         self.isLoadingTransactions(true);
-        getTransactionsCommand.execute()
+        var historyPromise = getTransactionsCommand.execute()
             .done(function(data){
                 self.transactions(ko.utils.arrayMap(data,function(transaction){
                     return new Transaction({ transaction });
                 }));
                 self.isLoadingTransactions(false); 
-            })
-            .fail(function(){
-            })
-            .always(function(){
             });
+        console.log('historyPromise: ');
+        console.log(historyPromise);
+        return historyPromise;
     };
     return historyType; 
 });

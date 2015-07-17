@@ -85,6 +85,15 @@ app.get('/walletpassphrase/:passphrase/:stakingonly?', function(req,res){
     var stakingOnly = req.params.stakingonly || true;
     callBtcd('walletpassphrase', res, btcdHandler, req.params.passphrase, stakingOnly);
 });
+
+app.get('/help/:commandname?', function(req, res){
+    console.log(req.params.commandname);
+    req.params.commandname ? callBtcd('help', res, btcdHandler, req.params.commandname) :
+        callBtcd('help',res,btcdHandler);
+
+});
+
+
 //app.get('/', function(req,res){
 //	res.render('index');
 //	});
@@ -125,16 +134,6 @@ app.get('/getbalance', function(req, res){
 
 app.get('/getnewaddress', function(req, res){
 	btcd.getnewaddress(function(err, result){
-		console.log("err:"+err+" result:"+result);
-		if(err)
-			res.send(err);
-		else
-			res.send(JSON.stringify(result));
-	});
-});
-
-app.get('/help', function(req, res){
-	btcd.help(function(err, result){
 		console.log("err:"+err+" result:"+result);
 		if(err)
 			res.send(err);

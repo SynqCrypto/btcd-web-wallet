@@ -41,17 +41,16 @@ define(['knockout','common/dialog','viewmodels/receive/receive-address','viewmod
     receiveType.prototype.getReceiveAddresses = function(){
         var self = this, getReceivedByAddressesCommand = new Command('listreceivedbyaddress',['1','true']);
         self.isLoadingReceiveAddresses(true);
-        getReceivedByAddressesCommand.execute()
+        var receivePromise = getReceivedByAddressesCommand.execute()
             .done(function(data){
                 self.addresses(ko.utils.arrayMap(data,function(address){
                     return new ReceiveAddress({ address});
                 }));
                 self.isLoadingReceiveAddresses(false); 
-            })
-            .fail(function(){
-            })
-            .always(function(){
             });
+        console.log('receivePromise: ');
+        console.log(receivePromise);
+        return receivePromise;
     };
     return receiveType; 
 });

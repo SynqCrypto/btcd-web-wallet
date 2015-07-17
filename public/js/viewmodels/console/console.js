@@ -22,11 +22,11 @@ define(['knockout'], function(ko){
             dataType: 'json'
         }).done(function(data){
             var result;
-            if( toString.call(data) === "[object String]"){
-                result = data;
+            if( toString.call(data.result) === "[object String]"){
+                result = data.result;
             }
             else{
-                result = JSON.stringify(data, null, 4);
+                result = JSON.stringify(data.result, null, 4);
             }
             self.commandOutput(result);                
         }).fail(function(jqXHR, textStatus, errorThrown){

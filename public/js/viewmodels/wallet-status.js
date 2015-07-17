@@ -13,17 +13,16 @@ define(['knockout','viewmodels/common/command'],function(ko,Command){
     walletStatusType.prototype.load = function(){
         var self = this, getInfoCommand = new Command('getinfo',[]);
         self.isLoadingStatus(true);
-        getInfoCommand.execute()
+        var statusPromise = getInfoCommand.execute()
             .done(function(data){
                 console.log(data);
                 self.total(data.balance);
                 self.stake(data.stake);
                 self.isLoadingStatus(false); 
-            })
-            .fail(function(){
-            })
-            .always(function(){
             });
+        console.log('statusPromise:');
+        console.log(statusPromise);
+        return statusPromise;
     };
 
     return walletStatusType;

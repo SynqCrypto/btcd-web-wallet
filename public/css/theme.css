@@ -112,7 +112,7 @@ body {
 .top-content {
   width: 100%;
   background-color: #3A97D4;
-  position: fixed;
+  /*position: fixed;*/
 }
 
 .top-content .container { 
@@ -171,7 +171,7 @@ body {
 }
 
 .wallet-nav.container{
-  padding: 0px;
+  /*padding: 0px;*/
   
 }
 
@@ -195,7 +195,8 @@ body {
 }
 
 #main {
-  padding-top: 250px;
+  margin-top: 30px;  
+  /*padding-top: 250px;*/
 }
 
 .table-striped > tbody > tr:nth-of-type(2n) {
@@ -208,4 +209,9 @@ body {
 
 #receive-container .glyph-icon-plus{
   color: green;
+}
+
+.console-out .pre-scrollable{
+  font-size: 10px;
+  /*height:200px;*/
 }

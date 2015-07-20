@@ -1,22 +1,28 @@
 define(['knockout','common/dialog','viewmodels/common/confirmation-dialog','viewmodels/common/command'], function(ko,dialog,ConfirmationDialog,Command) {
     var walletPassphraseType = function(options){
-        var self = this;
+        var self = this,
+            options = options || {};
+        this.forEncryption = options.forEncryption || ko.observable(false);
         this.walletPassphrase = ko.observable('');
         this.stakingOnly = ko.observable(true);
-        this.stakingOnlyDisabled = false;
+        this.canSpecifyStaking = false;
         this.canSubmit = ko.computed(function(){
             return true;
-            //return self.walletPassphrase().length > 0;
+            return self.walletPassphrase().length > 0;
         });
     };
 
-    walletPassphraseType.prototype.userPrompt = function(title, message, affirmativeButtonText){
-        var self = this, walletPassphraseDeferred = $.Deferred(),
+    walletPassphraseType.prototype.userPrompt = function(encrypt, title, message, affirmativeButtonText){
+        var self = this, 
+            walletPassphraseDeferred = $.Deferred(),
             passphraseDialog = new ConfirmationDialog({
                 title: title || 'Wallet passphrase',
                 contentTemplate: "modals/password-prompt",
                 context: self,
                 canAffirm: self.canSubmit,
+                allowClose: false,
+                showNegativeButton: false,
+                message: encrypt ? "Specify a passphrase for encrypting your wallet" : "",
                 affirmativeButtonText: affirmativeButtonText,
                 affirmativeHandler: function(walletPassphrsaeDeferred){
                     self.openWallet()
@@ -27,7 +33,9 @@ define(['knockout','common/dialog','viewmodels/common/confirmation-dialog','view
                             walletPassphraseDeferred.reject(error);
                         });
                 }
-            }).open();
+            });
+            self.forEncryption = encrypt;
+            passphraseDialog.open();
 
         return walletPassphraseDeferred.promise();
     };

@@ -5,6 +5,8 @@ define(['knockout','common/dialog'], function(ko,dialog) {
         this.title = options.title || "Notification";
         this.affirmativeHandler = options.affirmativeHandler;
         this.negativeHandler = options.negativeHandler;
+        this.allowClose = !(options.allowClose === false);
+        this.showNegativeButton = !(options.showNegativeButton === false);
         this.template = options.template || "modals/confirmation-dialog";
         this.canAffirm = options.canAffirm || true;
         

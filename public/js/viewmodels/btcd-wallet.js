@@ -1,5 +1,5 @@
-define(['knockout','common/dialog','viewmodels/wallet-status','viewmodels/send/send','viewmodels/receive/receive','viewmodels/history/history','viewmodels/console/console', 'bindinghandlers/modal','viewmodels/common/wallet-passphrase'], 
-function(ko, dialog, WalletStatus, Send, Receive, History, Console, Modal, WalletPassphrase){
+define(['knockout','common/dialog','viewmodels/wallet-status','viewmodels/send/send','viewmodels/receive/receive','viewmodels/history/history','viewmodels/console/console', 'bindinghandlers/modal','viewmodels/common/wallet-passphrase', 'viewmodels/common/command'], 
+function(ko, dialog, WalletStatus, Send, Receive, History, Console, Modal, WalletPassphrase, Command){
 
     var walletType = function(options){
         var self = this;
@@ -80,7 +80,7 @@ function(ko, dialog, WalletStatus, Send, Receive, History, Console, Modal, Walle
     };
 
     walletType.prototype.promptToEncrypt = function(){
-        new WalletPassphrase().userPrompt('Wallet encrypt', 'Encrypt','OK')
+        new WalletPassphrase().userPrompt(true,'Encrypt', 'Encrypt','OK')
             .done(function(result){
                 console.log(result);
                 dialog.notification("Success");
@@ -92,7 +92,7 @@ function(ko, dialog, WalletStatus, Send, Receive, History, Console, Modal, Walle
     };
 
     walletType.prototype.promptToUnlockForStaking = function(){
-        new WalletPassphrase().userPrompt('Wallet unlock', 'Unlock the wallet for sending','OK')
+        new WalletPassphrase().userPrompt(false, 'Wallet unlock', 'Unlock the wallet for sending','OK')
             .done(function(result){
                 console.log(result);
                 dialog.notification("Success");

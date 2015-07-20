@@ -81,7 +81,7 @@ app.get('/sendtoaddress/:toaddress/:amount', function(req, res){
     callBtcd('sendtoaddress', res, btcdHandler, req.params.toAddress, amount);
 });
 
-app.get('/walletpassphrase/:passphrase/:stakingonly?', function(req,res){
+app.get('/walletpassphrase/:passphrase?/:stakingonly?', function(req,res){
     var stakingOnly = req.params.stakingonly || true;
     callBtcd('walletpassphrase', res, btcdHandler, req.params.passphrase, stakingOnly);
 });

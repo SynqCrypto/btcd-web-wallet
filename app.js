@@ -81,6 +81,14 @@ app.get('/sendtoaddress/:toaddress/:amount', function(req, res){
     callBtcd('sendtoaddress', res, btcdHandler, req.params.toAddress, amount);
 });
 
+app.get('/encryptwallet/:passphrase', function(req,res){
+    callBtcd('encryptwallet', res, btcdHandler, req.params.passphrase);
+});
+
+/*Object {error: null, result: "wallet encrypted; BitcoinDark server stopping, res… has been flushed, you need to make a new backup."}error: nullresult: "wallet encrypted; BitcoinDark server stopping, restart to run with encrypted wallet.  The keypool has been flushed, you need to make a new backup."__proto__: Object
+btcd-wallet.js:85 wallet encrypted; BitcoinDark server stopping, restart to run with encrypted wallet.  The keypool has been flushed, you need to make a new backup.
+modal.js:22 update modal bindinghandler*/
+
 app.get('/walletpassphrase/:passphrase?/:stakingonly?', function(req,res){
     var stakingOnly = req.params.stakingonly || true;
     callBtcd('walletpassphrase', res, btcdHandler, req.params.passphrase, stakingOnly);

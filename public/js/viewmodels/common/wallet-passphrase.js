@@ -2,13 +2,17 @@ define(['knockout','common/dialog','viewmodels/common/confirmation-dialog','view
     var walletPassphraseType = function(options){
         var self = this,
             options = options || {};
-        this.forEncryption = options.forEncryption || ko.observable(false);
+        this.forEncryption = ko.observable(options.forEncryption) || ko.observable(false);
         this.walletPassphrase = ko.observable('');
+        this.walletPassphraseConfirm = ko.observable('');
         this.stakingOnly = ko.observable(true);
         this.canSpecifyStaking = false;
         this.canSubmit = ko.computed(function(){
-            return true;
-            return self.walletPassphrase().length > 0;
+            //return true;
+            var passphrase = self.walletPassphrase(),
+                passphraseConfirm = self.walletPassphraseConfirm();    
+
+            return passphrase.length > 0 && (self.forEncryption() ? passphrase === passphraseConfirm : true) ;
         });
     };
 
@@ -25,24 +29,27 @@ define(['knockout','common/dialog','viewmodels/common/confirmation-dialog','view
                 message: encrypt ? "Specify a passphrase for encrypting your wallet" : "",
                 affirmativeButtonText: affirmativeButtonText,
                 affirmativeHandler: function(walletPassphrsaeDeferred){
-                    self.openWallet()
-                        .done(function(result){
-                            walletPassphraseDeferred.resolve(result);
-                        })
-                        .fail(function(error){
-                            walletPassphraseDeferred.reject(error);
-                        });
+                    if(self.canSubmit()){
+                        self.openWallet(encrypt)
+                            .done(function(result){
+                                walletPassphraseDeferred.resolve(result);
+                            })
+                            .fail(function(error){
+                                walletPassphraseDeferred.reject(error);
+                            });
+                    }
                 }
             });
-            self.forEncryption = encrypt;
+            self.forEncryption(encrypt);
             passphraseDialog.open();
 
         return walletPassphraseDeferred.promise();
     };
 
-    walletPassphraseType.prototype.openWallet = function(){
+    walletPassphraseType.prototype.openWallet = function(encrypt){
         var self = this, openWalletDeferred= $.Deferred(), 
-            walletPassphraseCommand = new Command('walletpassphrase', [self.walletPassphrase(), self.stakingOnly()]);
+            walletPassphraseCommand = encrypt ? new Command('encryptwallet', [self.walletPassphrase()]) :
+                new Command('walletpassphrase', [self.walletPassphrase(), self.stakingOnly()]);
 
         walletPassphraseCommand.execute()
             .done(function(result){

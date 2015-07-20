@@ -60,8 +60,8 @@ function(ko, dialog, WalletStatus, Send, Receive, History, Console, Modal, Walle
 
     walletType.prototype.checkEncryptionStatus = function(){
         var self = this;
-        var getTransactionsCommand = new Command('walletpassphrase',[]),
-            encryptionStatusPromise = getTransactionsCommand.execute()
+        var walletPassphraseCommand = new Command('walletpassphrase',[]),
+            encryptionStatusPromise = walletPassphraseCommand.execute()
             .done(function(data){
                 dialog.notification("There is something seriously wrong with everything.");
             })

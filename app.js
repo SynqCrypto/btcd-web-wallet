@@ -85,20 +85,24 @@ app.get('/encryptwallet/:passphrase', function(req,res){
     callBtcd('encryptwallet', res, btcdHandler, req.params.passphrase);
 });
 
+
 /*Object {error: null, result: "wallet encrypted; BitcoinDark server stopping, res… has been flushed, you need to make a new backup."}error: nullresult: "wallet encrypted; BitcoinDark server stopping, restart to run with encrypted wallet.  The keypool has been flushed, you need to make a new backup."__proto__: Object
 btcd-wallet.js:85 wallet encrypted; BitcoinDark server stopping, restart to run with encrypted wallet.  The keypool has been flushed, you need to make a new backup.
 modal.js:22 update modal bindinghandler*/
 
-app.get('/walletpassphrase/:passphrase?/:stakingonly?', function(req,res){
-    var stakingOnly = req.params.stakingonly || true;
-    callBtcd('walletpassphrase', res, btcdHandler, req.params.passphrase, stakingOnly);
+/*err:Error: {"result":null,"error":{"code":-17,"message":"Error: Wallet is already unlocked, use walletlock first if need to change unlock settings."},"id":1437436583797} result:undefined*/
+
+app.get('/walletpassphrase/:passphrase?/:timeout?/:stakingonly?', function(req,res){
+    var stakingOnly = req.params.stakingonly === 'true',
+        timeout = parseInt(req.params.timeout);
+    callBtcd('walletpassphrase', res, btcdHandler, req.params.passphrase, timeout, stakingOnly);
 });
 
+app.get('/walletlock', function(req,res){ callBtcd('walletlock', res, btcdHandler); });
+
 app.get('/help/:commandname?', function(req, res){
-    console.log(req.params.commandname);
     req.params.commandname ? callBtcd('help', res, btcdHandler, req.params.commandname) :
         callBtcd('help',res,btcdHandler);
-
 });
 
 

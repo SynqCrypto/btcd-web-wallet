@@ -11,11 +11,11 @@ function(ko, dialog, WalletStatus, Send, Receive, History, Console, Modal, Walle
         self.isWalletUnencrypted = ko.observable(true);
         
         self.checkEncryptionStatus();
+        self.walletStatus = new WalletStatus({parent: self});
         self.send = new Send({parent: self}); 
         self.history = new History({parent: self}); 
         self.console = new Console({parent: self}); 
         self.receive = new Receive({parent: self});
-        self.walletStatus = new WalletStatus({parent: self});
         self.refresh();
         self.pollWalletStatus();
     };
@@ -67,13 +67,15 @@ function(ko, dialog, WalletStatus, Send, Receive, History, Console, Modal, Walle
             })
             .fail(function(error){
                 switch(error.code){
-                    case -15: 
+                    case -15:  //wallet is unencrypted
                         self.isWalletUnencrypted(true);
                         self.promptToEncrypt();
                         break;
-                    case -1:
+                    case -1: //wallet is locked
                         self.isWalletUnencrypted(false);
                         self.promptToUnlockForStaking();
+                        break;
+                    case -17: //wallet is already unlocked
                         break;
                 };
             });
@@ -83,7 +85,7 @@ function(ko, dialog, WalletStatus, Send, Receive, History, Console, Modal, Walle
         new WalletPassphrase().userPrompt(true,'Encrypt', 'Encrypt','OK')
             .done(function(result){
                 console.log(result);
-                dialog.notification("Success");
+                dialog.notification("Wallet successfully encrypted. Restart your btcd daemon to continue.");
             })
             .fail(function(error){
                 console.log(error);
@@ -92,10 +94,9 @@ function(ko, dialog, WalletStatus, Send, Receive, History, Console, Modal, Walle
     };
 
     walletType.prototype.promptToUnlockForStaking = function(){
-        new WalletPassphrase().userPrompt(false, 'Wallet unlock', 'Unlock the wallet for sending','OK')
+        new WalletPassphrase().userPrompt(false, 'Wallet unlock', 'Unlock the wallet','OK')
             .done(function(result){
                 console.log(result);
-                dialog.notification("Success");
             })
             .fail(function(error){
                 console.log(error);

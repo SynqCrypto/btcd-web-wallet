@@ -1,11 +1,12 @@
 define(['knockout','common/dialog','viewmodels/common/confirmation-dialog','viewmodels/common/command'], function(ko,dialog,ConfirmationDialog,Command) {
+    var defaultWalletStakingUnlockTime = 999999;
     var walletPassphraseType = function(options){
         var self = this,
             options = options || {};
         this.forEncryption = ko.observable(options.forEncryption) || ko.observable(false);
-        this.walletPassphrase = ko.observable('');
+        this.walletPassphrase = ko.observable(options.walletPassphrase || '');
         this.walletPassphraseConfirm = ko.observable('');
-        this.stakingOnly = ko.observable(true);
+        this.stakingOnly = options.stakingOnly === false ? ko.observable(false) : ko.observable(true);
         this.canSpecifyStaking = false;
         this.canSubmit = ko.computed(function(){
             //return true;
@@ -32,7 +33,7 @@ define(['knockout','common/dialog','viewmodels/common/confirmation-dialog','view
                     if(self.canSubmit()){
                         self.openWallet(encrypt)
                             .done(function(result){
-                                walletPassphraseDeferred.resolve(result);
+                                walletPassphraseDeferred.resolve($.extend(result, { passphrase: self.walletPassphrase() } ));
                             })
                             .fail(function(error){
                                 walletPassphraseDeferred.reject(error);
@@ -49,7 +50,7 @@ define(['knockout','common/dialog','viewmodels/common/confirmation-dialog','view
     walletPassphraseType.prototype.openWallet = function(encrypt){
         var self = this, openWalletDeferred= $.Deferred(), 
             walletPassphraseCommand = encrypt ? new Command('encryptwallet', [self.walletPassphrase()]) :
-                new Command('walletpassphrase', [self.walletPassphrase(), self.stakingOnly()]);
+                new Command('walletpassphrase', [self.walletPassphrase(), defaultWalletStakingUnlockTime,  self.stakingOnly()]);
 
         walletPassphraseCommand.execute()
             .done(function(result){

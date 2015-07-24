@@ -21,7 +21,7 @@ function(ko, dialog, WalletStatus, Send, Receive, History, Console, Modal, Walle
     };
 
     walletType.prototype.unlockWallet = function(){
-        new WalletPassphrase().userPrompt('Wallet unlock', 'Unlock the wallet for sending','OK')
+        new WalletPassphrase().userPrompt(false, 'Wallet unlock', 'Unlock the wallet for sending','OK')
             .done(function(result){
                 console.log(result);
                 dialog.notification("Success");

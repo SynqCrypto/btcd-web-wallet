@@ -7,12 +7,16 @@
     </div>
     <div class="row">
         <div class="col-sm-12">
-            <div class="input-group">
-                <input type="text" class="form-control input-sm" placeholder="Console Command" data-bind="textInput: commandText">
-                <span class="input-group-btn">
-                    <button class="btn btn-primary btn-sm" type="button" data-bind="click: runCommand">Run</button>
-                </span>
-            </div><!-- /input-group -->
-        </div><!-- /.col-lg-6 -->
-    </div><!-- /.row -->
+            <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" class="form-control input-sm" placeholder="Console Command" data-bind="textInput: commandText">
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary btn-sm" type="submit" data-bind="click: runCommand">Run</button>
+                        </span>
+                    </div><!-- /input-group -->
+                </div><!-- /.form-group -->
+            </form>
+        </div><!-- /.col-sm-12 -->
+    </div><!-- /.row-flo -->
 </div>

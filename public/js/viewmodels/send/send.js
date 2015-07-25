@@ -1,4 +1,4 @@
-define(['knockout','common/dialog','viewmodels/common/confirmation-dialog','viewmodels/common/wallet-passphrase'], function(ko,dialog,ConfirmationDialog,WalletPassphrase){
+define(['knockout','common/dialog','viewmodels/common/confirmation-dialog','viewmodels/common/wallet-passphrase','viewmodels/common/command'], function(ko,dialog,ConfirmationDialog,WalletPassphrase,Command){
     var sendType = function(options){
         var self = this, sendOptions = options || {};
         this.wallet= sendOptions.parent;
@@ -34,7 +34,7 @@ define(['knockout','common/dialog','viewmodels/common/confirmation-dialog','view
 
         walletPassphrase.userPrompt(false, 'Wallet unlock', 'Unlock the wallet for sending','OK')
             .done(function(result){
-                passphraseDialogPromise.resolve(walletPassphrse.walletPassphrase());                            
+                passphraseDialogPromise.resolve(walletPassphrase.walletPassphrase());                            
             })
             .fail(function(error){
                 passphraseDialogPromise.reject(error);
@@ -46,14 +46,16 @@ define(['knockout','common/dialog','viewmodels/common/confirmation-dialog','view
         var self = this;
         console.log("Send request submitted, unlocking wallet for sending...");
         if(self.canSend()){
-            this.unlockWallet()
-                .done(function(result){
-                    console.log("Wallet successfully unlocked, sending...");
-                    sendToAddress(result);
-                })
-                .fail(function(error){
-                    dialog.notification(error.message);
-                });
+            lockWallet().done(function(){
+                self.unlockWallet()
+                    .done(function(result){
+                        console.log("Wallet successfully unlocked, sending...");
+                        self.sendToAddress(result);
+                    })
+                    .fail(function(error){
+                        dialog.notification(error.message);
+                    });
+            }); 
         }
         else{
             console.log("Can't send. Form in invalid state");
@@ -62,10 +64,10 @@ define(['knockout','common/dialog','viewmodels/common/confirmation-dialog','view
     
     sendType.prototype.sendToAddress = function(auth) { 
         var self = this;
-        sendCommand = new Command('sendToAddress', [self.recipientAddress(), self.amount()]).execute()
+        sendCommand = new Command('sendtoaddress', [self.recipientAddress(), self.amount()]).execute()
             .done(function(result){
                 console.log("Send Success");
-                self.lockWallet()
+                lockWallet()
                     .done(function(){
                         var walletPassphrase = new WalletPassphrase({
                             walletPassphrase: auth,
@@ -76,7 +78,7 @@ define(['knockout','common/dialog','viewmodels/common/confirmation-dialog','view
                         walletPassphrase.openWallet(false)
                             .done(function() {
                                 console.log("Wallet successfully re-opened for staking");
-                                self.parent.refresh()
+                                self.wallet.refresh()
                             });
                     });
             })
@@ -84,8 +86,7 @@ define(['knockout','common/dialog','viewmodels/common/confirmation-dialog','view
                 console.log("Send error:");
                 console.log(error);
             });
-    }; 
    
-    
+    };   
     return sendType; 
 });

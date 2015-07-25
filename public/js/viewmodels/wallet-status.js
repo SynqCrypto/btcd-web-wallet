@@ -20,8 +20,8 @@ define(['knockout','viewmodels/common/command'],function(ko,Command){
                 self.stake(data.stake);
                 self.isLoadingStatus(false); 
             });
-        console.log('statusPromise:');
-        console.log(statusPromise);
+        //console.log('statusPromise:');
+        //console.log(statusPromise);
         return statusPromise;
     };
 

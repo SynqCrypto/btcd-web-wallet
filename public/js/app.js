@@ -1,4 +1,12 @@
-define( [ "knockout",  "viewmodels/btcd-wallet", "common/dialog", "knockout-amd-helpers", "text", "bindinghandlers/modal" ], function( ko, Wallet, dialog) {
+define( [ 
+        "knockout",  
+        "viewmodels/btcd-wallet", 
+        "common/dialog", 
+        "knockout-amd-helpers", 
+        "text", 
+        "bindinghandlers/modal", 
+        "bindinghandlers/numeric-text",
+        "bindinghandlers/numeric-input" ], function( ko, Wallet, dialog) {
     var App = function(){
 
     };

@@ -77,8 +77,8 @@ app.get('/listreceivedbyaddress/:minconf?/:includeempty?', function(req, res){
 });
 
 app.get('/sendtoaddress/:toaddress/:amount', function(req, res){
-    var amount = parseInt(req.params.amount);
-    callBtcd('sendtoaddress', res, btcdHandler, req.params.toAddress, amount);
+    var amount = parseFloat(req.params.amount);
+    callBtcd('sendtoaddress', res, btcdHandler, req.params.toaddress, amount);
 });
 
 app.get('/encryptwallet/:passphrase', function(req,res){

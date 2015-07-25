@@ -19,7 +19,7 @@ define(['knockout'], function(ko){
 
         },
         update: function(element, valueAccessor) {
-            console.log('update modal bindinghandler');
+            //console.log('update modal bindinghandler');
             var value = valueAccessor();
             if (ko.utils.unwrapObservable(value)) {
                 $(element).modal('show');

@@ -7,7 +7,7 @@ define(['knockout','common/dialog','viewmodels/common/confirmation-dialog','view
         this.walletPassphrase = ko.observable(options.walletPassphrase || '');
         this.walletPassphraseConfirm = ko.observable('');
         this.stakingOnly = options.stakingOnly === false ? ko.observable(false) : ko.observable(true);
-        this.canSpecifyStaking = false;
+        this.canSpecifyStaking = options.canSpecifyStaking === false ? ko.observable(false) : ko.observable(true);
         this.canSubmit = ko.computed(function(){
             //return true;
             var passphrase = self.walletPassphrase(),

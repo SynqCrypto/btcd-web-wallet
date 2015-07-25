@@ -20,7 +20,7 @@ define(['knockout','common/dialog','viewmodels/common/confirmation-dialog','view
     function lockWallet(){
         var sendCommand = new Command('walletlock').execute()
             .done(function(result){
-                dialog.notification('Wallet relocked');
+                console.log('Wallet relocked');
             })
             .fail(function(error){
                 dialog.notification(error.message, "Failed to re-lock wallet");
@@ -29,7 +29,7 @@ define(['knockout','common/dialog','viewmodels/common/confirmation-dialog','view
     }
    
     sendType.prototype.unlockWallet= function(){
-        var self = this, walletPassphrase = new WalletPassphrase(),
+        var self = this, walletPassphrase = new WalletPassphrase({canSpecifyStaking:false, stakingOnly:false}),
             passphraseDialogPromise = $.Deferred();
 
         walletPassphrase.userPrompt(false, 'Wallet unlock', 'Unlock the wallet for sending','OK')
@@ -67,6 +67,10 @@ define(['knockout','common/dialog','viewmodels/common/confirmation-dialog','view
         sendCommand = new Command('sendtoaddress', [self.recipientAddress(), self.amount()]).execute()
             .done(function(result){
                 console.log("Send Success");
+                auth = "";
+                self.recipientAddress('');
+                self.amount(0);
+
                 lockWallet()
                     .done(function(){
                         var walletPassphrase = new WalletPassphrase({

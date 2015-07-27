@@ -12,7 +12,7 @@ define(['knockout','common/dialog','viewmodels/common/confirmation-dialog','view
                 available = self.wallet.walletStatus.available(),
                 canSend;
 
-            canSend = isNumber && available > 0, address.length > 0;
+            canSend = isNumber && available > 0 && address.length > 0 && amount > 0;
             return canSend;
         });
     };

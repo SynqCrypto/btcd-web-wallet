@@ -3,10 +3,11 @@ define( [
         "viewmodels/btcd-wallet", 
         "common/dialog", 
         "knockout-amd-helpers", 
+        "knockout-validation",
         "text", 
         "bindinghandlers/modal", 
         "bindinghandlers/numeric-text",
-        "bindinghandlers/numeric-input" ], function( ko, Wallet, dialog) {
+        "bindinghandlers/numeric-input"], function( ko, Wallet, dialog) {
     var App = function(){
 
     };

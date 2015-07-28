@@ -1,8 +1,13 @@
-define(['knockout','common/dialog','viewmodels/common/confirmation-dialog','viewmodels/common/wallet-passphrase','viewmodels/common/command'], function(ko,dialog,ConfirmationDialog,WalletPassphrase,Command){
+define(['knockout',
+        'common/dialog',
+        'viewmodels/common/confirmation-dialog',
+        'viewmodels/common/wallet-passphrase',
+        'viewmodels/common/command',
+        'patterns'], function(ko,dialog,ConfirmationDialog,WalletPassphrase,Command,patterns){
     var sendType = function(options){
         var self = this, sendOptions = options || {};
         this.wallet= sendOptions.parent;
-        this.recipientAddress = ko.observable("");
+        this.recipientAddress = ko.observable("").extend( { pattern: { params: patterns.bitcoindark, message: 'Not a valid address' } });
         this.amount = ko.observable(sendOptions.amount || 0.0);
         this.minerFee = ko.observable(sendOptions.minerFee || 0.0001);
         this.canSend = ko.computed(function(){

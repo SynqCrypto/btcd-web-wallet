@@ -65,7 +65,8 @@ function btcdHandler(err, result){
 app.get('/getinfo', function(req,res){ callBtcd('getInfo', res, btcdHandler); } );
 
 app.get('/getnewaddress/:account?', function(req, res){ 
-    callBtcd('getnewaddress', res, btcdHandler, req.params.account) 
+    var accountName = req.params.account || '';
+    callBtcd('getnewaddress', res, btcdHandler, accountName) 
 });
 
 app.get('/listtransactions', function(req, res){ callBtcd('listtransactions', res, btcdHandler )});

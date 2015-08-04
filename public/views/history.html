@@ -13,7 +13,7 @@
                 <td data-bind="text: timeReceived"></td>
                 <td data-bind="text: category"></td>
                 <td data-bind="text: address"></td>
-                <td data-bind="numericText: amount, precision: 4"></td>
+                <td data-bind="numericText: $data.amount + $data.fee, precision: 4"></td>
             </tr>
         </tbody>
     </table>

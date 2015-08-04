@@ -19,7 +19,8 @@ define(['knockout','viewmodels/history/transaction','viewmodels/common/command']
         self.isLoadingTransactions(true);
         var historyPromise = getTransactionsCommand.execute()
             .done(function(data){
-                self.transactions(ko.utils.arrayMap(data,function(transaction){
+                var descendingTxns = data.reverse();
+                self.transactions(ko.utils.arrayMap(descendingTxns,function(transaction){
                     return new Transaction({ transaction });
                 }));
                 self.isLoadingTransactions(false); 

@@ -69,7 +69,7 @@ app.get('/getnewaddress/:account?', function(req, res){
     callBtcd('getnewaddress', res, btcdHandler, accountName) 
 });
 
-app.get('/listtransactions', function(req, res){ callBtcd('listtransactions', res, btcdHandler )});
+app.get('/listtransactions', function(req, res){ callBtcd('listtransactions', res, btcdHandler, '*', 99999999999999999) } );
 
 app.get('/listreceivedbyaddress/:minconf?/:includeempty?', function(req, res){
     var includeEmpty = (req.params.includeempty || false) === 'true', 

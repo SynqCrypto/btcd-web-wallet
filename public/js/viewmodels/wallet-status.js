@@ -4,6 +4,8 @@ define(['knockout','viewmodels/common/command'],function(ko,Command){
         self.total = ko.observable(0);
         self.stake = ko.observable(0);
         self.isLoadingStatus = ko.observable(false);
+        self.blocks = ko.observable(0);
+        self.totalBlocks = ko.observable(0);
         this.available = ko.pureComputed(function(){
             var total = self.total(), stake = self.stake();
             return total - stake;
@@ -11,13 +13,16 @@ define(['knockout','viewmodels/common/command'],function(ko,Command){
     };
 
     walletStatusType.prototype.load = function(){
-        var self = this, getInfoCommand = new Command('getinfo',[]);
+        var self = this, getInfoCommand = new Command('getinfo',[]), getBlockCountCommand = new Command('getblockcount',[]);
         self.isLoadingStatus(true);
-        var statusPromise = getInfoCommand.execute()
-            .done(function(data){
-                console.log(data);
-                self.total(data.balance);
-                self.stake(data.stake);
+        var statusPromise = $.when(getInfoCommand.execute(), getBlockCountCommand.execute())
+            .done(function(getInfoData, getBlockCountData){
+                console.log(getInfoData);
+                console.log(getBlockCountData);
+                self.total(getInfoData.balance);
+                self.blocks(getInfoData.blocks);
+                self.stake(getInfoData.stake);
+                self.totalBlocks(getBlockCountData);
                 self.isLoadingStatus(false); 
             });
         //console.log('statusPromise:');

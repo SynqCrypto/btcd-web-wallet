@@ -64,6 +64,7 @@ function btcdHandler(err, result){
 
 app.get('/getinfo', function(req,res){ callBtcd('getInfo', res, btcdHandler); } );
 app.get('/getblockcount', function(req,res){ callBtcd('getBlockCount', res, btcdHandler); } );
+app.get('/getstakinginfo', function(req,res) { callBtcd('getStakingInfo', res, btcdHandler); } );
 app.get('/getnewaddress/:account?', function(req, res){ 
     var accountName = req.params.account || '';
     callBtcd('getnewaddress', res, btcdHandler, accountName) 

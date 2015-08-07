@@ -217,3 +217,7 @@ body {
   font-size: 10px;
   /*height:200px;*/
 }
+
+.confirmation-body{
+  width: 100%;
+}

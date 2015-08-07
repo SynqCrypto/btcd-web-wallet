@@ -22,7 +22,7 @@ define(['knockout'],function(ko){
             url: parseCommand(self.commandName(), self.args()),
             dataType: 'json'
         }).done(function(data){
-            //console.log(data);
+            console.log(data);
             if(data.error){
                 deferred.reject(data.error.error);
             }

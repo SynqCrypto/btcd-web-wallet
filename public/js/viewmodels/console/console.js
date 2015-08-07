@@ -21,15 +21,16 @@ define(['knockout'], function(ko){
             url: parseCommand(self.commandText()),
             dataType: 'json'
         }).done(function(data){
-            var result;
-            if( toString.call(data.result) === "[object String]"){
-                result = data.result;
-            }
-            else{
+            console.log(data);
+            var result = data.error ? data.error.error.message : data.result;
+            if( toString.call(result) !== "[object String]"){
                 result = JSON.stringify(data.result, null, 4);
             }
             self.commandOutput(result);                
         }).fail(function(jqXHR, textStatus, errorThrown){
+            console.log(jqXHR);
+            console.log(textStatus);
+            console.log(errorThrown);
             self.commandOutput(errorThrown);   
         }).always(function(){
             self.isLoading(false);

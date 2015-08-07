@@ -8,7 +8,7 @@ define(['knockout','common/dialog'], function(ko,dialog) {
         this.allowClose = !(options.allowClose === false);
         this.showNegativeButton = !(options.showNegativeButton === false);
         this.template = options.template || "modals/confirmation-dialog";
-        this.canAffirm = options.canAffirm || true;
+        this.canAffirm = options.canAffirm || ko.observable(true);
         
         this.contentTemplate = options.contentTemplate || "modals/confirmation-message";
         this.message = options.message || "";

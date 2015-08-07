@@ -21,16 +21,26 @@ function(ko, dialog, WalletStatus, Send, Receive, History, Console, Modal, Walle
     };
 
     walletType.prototype.unlockWallet = function(){
-        new WalletPassphrase().userPrompt(false, 'Wallet unlock', 'Unlock the wallet for sending','OK')
+        new WalletPassphrase().userPrompt(false, 'Wallet unlock', 'This action will unlock the wallet for sending','OK')
             .done(function(result){
                 console.log(result);
-                dialog.notification("Success");
+                dialog.notification("Wallet unlocked");
             })
             .fail(function(error){
                 console.log(error);
                 dialog.notification(error.message);
             });
         //dialog.openDialog({ text:ko.observable('Test')}, 'modals/placeholder');
+    };
+
+    walletType.prototype.lockWallet = function(){
+        var walletLockCommand = new Command('walletlock',[]).execute()
+            .done(function(){
+                dialog.notification("Wallet locked");
+            })
+            .fail(function(){
+                dialog.notification("Wallet already locked");
+            });
     };
 
     walletType.prototype.encryptWallet = function(){

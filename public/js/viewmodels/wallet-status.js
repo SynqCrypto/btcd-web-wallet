@@ -24,9 +24,9 @@ define(['knockout','viewmodels/common/command'],function(ko,Command){
                 console.log(getInfoData);
                 console.log(getBlockCountData);
                 console.log(getStakingInfoData);
-                self.total(getInfoData.balance);
-                self.blocks(getInfoData.blocks);
                 self.stake(getInfoData.stake);
+                self.total(getInfoData.balance + self.stake());
+                self.blocks(getInfoData.blocks);
                 self.totalBlocks(getBlockCountData);
                 console.log("IsStaking: "  + getStakingInfoData.Staking);
                 self.isStaking(getStakingInfoData.Staking);

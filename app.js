@@ -96,6 +96,7 @@ modal.js:22 update modal bindinghandler*/
 
 app.get('/walletpassphrase/:passphrase?/:timeout?/:stakingonly?', function(req,res){
     var stakingOnly = req.params.stakingonly === 'true',
+        passphrase = decodeURIComponent(req.params.passphrase),
         timeout = parseInt(req.params.timeout);
     callBtcd('walletpassphrase', res, btcdHandler, req.params.passphrase, timeout, stakingOnly);
 });

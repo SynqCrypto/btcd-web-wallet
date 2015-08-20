@@ -4,13 +4,11 @@
  */
 
 var express = require('express');
+var bodyParser = require('body-parser');
 var routes = require('./routes');
-
 var http = require('http');
 var path = require('path');
 var app = express();
-
-
 var btcd=require("./btcdapi");
 
 
@@ -23,6 +21,7 @@ app.use(express.logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
+app.use(bodyParser.json());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -387,4 +386,10 @@ if(req.params.numwhales <= 200){
 }
 else
     res.render('ramrichlist', {richlist: "Please specify a number less than 200 for the top addresses"});
+});
+
+app.post('/supernet/:commandname', function(req, res){
+    console.log(req.body);
+    console.log(JSON.stringify(req.body));    
+    res.send(req.body);
 });

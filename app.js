@@ -3,14 +3,57 @@
  * Module dependencies.
  */
 
-var express = require('express');
-var routes = require('./routes');
 
+var count = 0;
+function timeout() {
+    setTimeout(function () {
+        count += 1;
+  //console.log(count);
+  ExecuteProcess('./check','');
+  if (count <= 9) {
+        timeout();
+  } else {
+btcdapp();
+  }
+    }, 5000);
+}
+
+timeout();
+
+
+//Start Process by passing executable and its attribute.
+function ExecuteProcess(prcs,atrbs) {
+  var spawn = require('child_process').spawn,
+  BitcoinDarkExec = spawn(prcs, [atrbs]);
+  BitcoinDarkExec.stdout.on('data', function (data) {
+    //console.log('stdout: ' + data);
+  if ( data == 0 ) {
+  console.log('no process is running...');
+  } else {
+  console.log('PROCESS IS RUNNING!...');
+  count = 10;
+  }
+  });
+  
+  BitcoinDarkExec.stderr.on('data', function (data) {
+    console.log('stderr: ' + data);
+  });
+  
+  BitcoinDarkExec.on('close', function (code) {
+    console.log('child process exited with code ' + code);
+  });
+}
+
+
+function btcdapp() {
+//------- app.js CODE GOES HERE -------
+
+var express = require('express');
+var bodyParser = require('body-parser');
+var routes = require('./routes');
 var http = require('http');
 var path = require('path');
 var app = express();
-
-
 var btcd=require("./btcdapi");
 
 
@@ -23,6 +66,7 @@ app.use(express.logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
+app.use(bodyParser.json());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -96,6 +140,7 @@ modal.js:22 update modal bindinghandler*/
 
 app.get('/walletpassphrase/:passphrase?/:timeout?/:stakingonly?', function(req,res){
     var stakingOnly = req.params.stakingonly === 'true',
+        passphrase = decodeURIComponent(req.params.passphrase),
         timeout = parseInt(req.params.timeout);
     callBtcd('walletpassphrase', res, btcdHandler, req.params.passphrase, timeout, stakingOnly);
 });
@@ -387,3 +432,21 @@ if(req.params.numwhales <= 200){
 else
     res.render('ramrichlist', {richlist: "Please specify a number less than 200 for the top addresses"});
 });
+
+app.post('/supernet', function(req, res){
+    console.log(JSON.stringify(req.body));
+    btcd.supernet(JSON.stringify(req.body), function(err,data){
+        var response = {
+            error: JSON.parse(err ? err.message : null),
+            result: data
+        };
+        console.log(JSON.stringify(data));
+        res.send(JSON.stringify(response));
+    });
+});
+
+
+//------- app.js CODE ENDS -------
+}
+
+

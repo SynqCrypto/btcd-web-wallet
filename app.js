@@ -388,8 +388,14 @@ else
     res.render('ramrichlist', {richlist: "Please specify a number less than 200 for the top addresses"});
 });
 
-app.post('/supernet/:commandname', function(req, res){
-    console.log(req.body);
-    console.log(JSON.stringify(req.body));    
-    res.send(req.body);
+app.post('/supernet', function(req, res){
+    console.log(JSON.stringify(req.body));
+    btcd.supernet(JSON.stringify(req.body), function(err,data){
+        var response = {
+            error: JSON.parse(err ? err.message : null),
+            result: data
+        };
+        console.log(JSON.stringify(data));
+        res.send(JSON.stringify(response));
+    });
 });

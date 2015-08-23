@@ -9,7 +9,13 @@ function timeout() {
     setTimeout(function () {
         count += 1;
   //console.log(count);
-  ExecuteProcess('./check','');
+  if (process.platform == 'darwin') { //If Mac OS X
+    ExecuteProcess('sh','./check.sh');
+    } else if (process.platform == 'linux') { //If Linux
+    ExecuteProcess('sh','./check.sh');
+    } else { //Else it's Windows
+    ExecuteProcess('check.bat','');
+}
   if (count <= 9) {
         timeout();
   } else {
@@ -444,3 +450,6 @@ app.post('/supernet', function(req, res){
         res.send(JSON.stringify(response));
     });
 });
+
+//------- app.js CODE ENDS -------
+}

@@ -444,9 +444,3 @@ app.post('/supernet', function(req, res){
         res.send(JSON.stringify(response));
     });
 });
-
-
-//------- app.js CODE ENDS -------
-}
-
-

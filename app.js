@@ -61,7 +61,7 @@ var http = require('http');
 var path = require('path');
 var app = express();
 var btcd=require("./btcdapi");
-
+var querystring = require('querystring');
 
 // all environments
 app.set('port', process.env.PORT || 8080);
@@ -449,6 +449,44 @@ app.post('/supernet', function(req, res){
         console.log(JSON.stringify(data));
         res.send(JSON.stringify(response));
     });
+});
+
+app.post('/nxt', function(req,res){
+    var reqBody = querystring.stringify(req.body);
+    var postOptions = {
+        host: '127.0.0.1',
+        port: '7876',
+        path: '/nxt',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Length': reqBody.length
+        }
+    };
+    var postReq = http.request(postOptions, function(nxtRes){ 
+        if(nxtRes.statusCode !== 200){
+            console.log("NXT Response Error: " + nxtRes.statusMessage);
+        }
+        else{
+            var data = '';
+            nxtRes.setEncoding('utf8');
+            nxtRes.on('data', function(chunk){
+                console.log(chunk);
+                data += chunk;
+            });
+
+            nxtRes.on('end', function(){
+                res.send(data);
+            });
+        }
+    });
+
+    postReq.on('error', function(e){
+        console.log("NXT Error: " + e.message);
+    });
+
+    postReq.write(reqBody);
+    postReq.end();
 });
 
 //------- app.js CODE ENDS -------

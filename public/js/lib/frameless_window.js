@@ -9,13 +9,18 @@ window.onload = function() {
   //startBTCD();
   if (process.platform == 'darwin') { //If Mac OS X
   	filepath = process.env.HOME + '/Library/Application Support/BitcoinDark/BitcoinDark.conf';
-	ExecuteProcess('btcd/BitcoinDarkd','-conf=' + filepath);
+	ExecuteProcess('btcd/osx/BitcoinDarkd','-conf=' + filepath);
 	} else if (process.platform == 'linux') { //If Linux
     filepath = process.env.HOME + '/.BitcoinDark/BitcoinDark.conf';
-	ExecuteProcess('btcd/BitcoinDarkd','-conf=' + filepath);
+	ExecuteProcess('btcd/linux/BitcoinDarkd','-conf=' + filepath);
 	} else { //Else it's Windows
     filepath = process.env.APPDATA + '/BitcoinDark/BitcoinDark.conf';
-	ExecuteProcess('btcd/BitcoinDarkd.exe','-conf=' + filepath);
+    if ( process.arch == 'x64' ) { //If Windows 64bit
+      ExecuteProcess('btcd/win64/BitcoinDarkd.exe','-conf=' + filepath);
+    }
+    else { //Else it's Windows 32bit
+     ExecuteProcess('btcd/win32/BitcoinDarkd.exe','-conf=' + filepath); 
+    }
 	}
   
   console.log("BitcoinDarkd Started.");

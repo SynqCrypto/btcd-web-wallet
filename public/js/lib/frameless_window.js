@@ -3,6 +3,13 @@ var gui = require("nw.gui");
 // Get the current window
 var win = gui.Window.get();
 
+// Extend application menu for Mac OS
+if (process.platform == "darwin") {
+  var menu = new gui.Menu({type: "menubar"});
+  menu.createMacBuiltin && menu.createMacBuiltin(window.document.title);
+  gui.Window.get().menu = menu;
+}
+
 window.onload = function() {
   
   console.log("Starting BitcoinDarkd Process...");
